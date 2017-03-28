@@ -82,7 +82,9 @@
                             }]
                         }
                     }).then(function (answer) {
-                        $state.go('user-management', null, {reload: 'user-management'});
+                        $state.go('user-management', null, {
+                            reload: 'user-management'
+                        });
                     }, function () {
                         $state.go('user-management');
                     });
@@ -146,14 +148,16 @@
                 onEnter: ['$stateParams', '$state', '$mdDialog', 'User', function ($stateParams, $state, $mdDialog, User) {
                     var confirm = $mdDialog.confirm()
                         .title('You delete this user?')
-                        .textContent('This user and its data will be lost forever!')
+                        .textContent('Notice! Cannot delete this user if having websites.')
                         .ariaLabel('Lucky day')
                         .targetEvent(null)
                         .ok('Yes')
                         .cancel('Cancel');
 
                     $mdDialog.show(confirm).then(function () {
-                        User.delete({login: $stateParams.login});
+                        User.delete({
+                            login: $stateParams.login
+                        });
                         $state.go('user-management', null, {
                             reload: 'user-management'
                         });

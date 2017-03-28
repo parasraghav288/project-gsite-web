@@ -17,9 +17,10 @@
             vm.homeState = vm.homeState.split('.')[0];
         }
         vm.website = entity;
-        vm.toolbar = vm.website.custom.toolbar;
-        if (vm.toolbar == null)
+        if (vm.website == null)
             loadDefault();
+        else
+            vm.toolbar = vm.website.custom.toolbar;
 
         // sidenav
         vm.toggleLeft = buildToggler('m-sidenav');
@@ -31,6 +32,19 @@
         }
 
         function loadDefault() {
+            vm.website = {
+              custom: {
+                  basicInfo: {
+                      isEnable: true
+                  },
+                  song: {
+                      isEnable: true
+                  },
+                  photo: {
+                      isEnable: true
+                  }
+              }
+            };
             vm.toolbar = {
                 isEnable: true,
                 title: 'Person',

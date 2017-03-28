@@ -35,10 +35,13 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    private final WebsiteService websiteService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, WebsiteService websiteService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.websiteService = websiteService;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -177,12 +180,24 @@ public class UserService {
             .map(UserDTO::new);
     }
 
-    public void deleteUser(String login) {
+     public boolean deleteUser(String login) {
+        if (!isDeleted(login))
+            return false;
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
             log.debug("Deleted User: {}", user);
         });
+
+        return true;
     }
+
+    private boolean isDeleted(String login) {
+        if (!websiteService.findAllByUserID(login).isEmpty())
+            return false;
+
+        return true;
+    }
+
 
     public void changePassword(String password) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
@@ -193,7 +208,7 @@ public class UserService {
         });
     }
 
-    
+
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
         return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
@@ -225,5 +240,9 @@ public class UserService {
             log.debug("Deleting not activated user {}", user.getLogin());
             userRepository.delete(user);
         }
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findOneByEmail(email);
     }
 }

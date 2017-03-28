@@ -12,23 +12,15 @@
 
 
         var website = entity;
-        vm.song = website.custom.song;
-        vm.photo = website.custom.photo;
-        var userLogin = website.user_id;
-        var webId = website.id;
+
 
         vm.songs = [];
         vm.photos = [];
 
-        vm.homepage = website.custom.homepage;
-        vm.homeState = $state.current.name;
-        vm.mainImageLink = null;
-
-
-        if (vm.homepage == null)
+        if (website == null)
             loadDefault();
         else {
-            if (MHomeService.getWebId() == null || MHomeService.getWebId() != website.id)
+            if (MHomeService.getImageLink() == null)
                 loadCustom();
             else {
                 vm.mainImageLink = MHomeService.getImageLink();
@@ -37,28 +29,42 @@
             }
         }
 
-
         vm.viewPhoto = viewPhoto;
         vm.playSongAt = playSongAt;
         vm.downloadSongAt = downloadSongAt;
 
         function loadCustom() {
-            MHomeService.setWebId(website.id);
-            loadMainImage(userLogin);
+            vm.song = website.custom.song;
+            vm.photo = website.custom.photo;
+            var userLogin = website.user_id;
+            var webId = website.id;
+
+            vm.homepage = website.custom.homepage;
+            vm.homeState = $state.current.name;
+            vm.mainImageLink = null;
+
+
+            loadMainImage(userLogin,webId);
 
             if (vm.song.isEnable) {
                 vm.songs = vm.song.items;
-                loadSong(userLogin, vm.songs);
+                loadSong(userLogin, vm.songs,webId);
             }
             if (vm.photo.isEnable) {
                 vm.photos = vm.photo.items;
-                loadPhoto(userLogin, vm.photos);
+                loadPhoto(userLogin, vm.photos,webId);
             }
 
         }
 
 
         function loadDefault() {
+            vm.photo = {
+                isEnable: true
+            };
+            vm.song = {
+                isEnable: true
+            };
             vm.photos = [
                 {
                     name: 'kaka-photo',
@@ -107,7 +113,7 @@
             MPhotoService.loadPhotoList(vm.photos);
         }
 
-        function loadMainImage(userLogin) {
+        function loadMainImage(userLogin,webId) {
 
             if (vm.homepage.mainImage == 'none')
                 return;
@@ -123,7 +129,7 @@
             }
         }
 
-        function loadPhoto(userLogin, photos) {
+        function loadPhoto(userLogin, photos,webId) {
             for (var i = 0; i < photos.length; i++) {
                 var photo = photos[i];
                 MyWebsiteStorage.loadImageForWebItem(userLogin, webId, photo, photo.url);
@@ -132,7 +138,7 @@
             MPhotoService.loadPhotoList(vm.photos);
         }
 
-        function loadSong(userLogin, songs) {
+        function loadSong(userLogin, songs,webId) {
             for (var i = 0; i < songs.length; i++) {
                 var song = songs[i];
                 MyWebsiteStorage.loadSongForWebItem(userLogin, webId, song, song.url);

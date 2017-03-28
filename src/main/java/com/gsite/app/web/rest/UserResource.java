@@ -168,18 +168,25 @@ public class UserResource {
                 .map(UserDTO::new));
     }
 
-    /**
-     * DELETE /users/:login : delete the "login" User.
-     *
-     * @param login the login of the user to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
-        userService.deleteUser(login);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
+        if (userService.deleteUser(login))
+            return ResponseEntity.ok().headers(HeaderUtil.createAlert("userManagement.deleted", login)).build();
+        else
+            return ResponseEntity.badRequest().build();
+    }
+
+
+    @GetMapping("/users/email")
+    @Timed
+    public ResponseEntity<ManagedUserVM> getUserByEmail(@ApiParam String email) {
+        log.debug("REST request to get User By email : {}", email);
+        return userService.getUserByEmail(email)
+            .map(ManagedUserVM::new)
+            .map(managedUserVM -> new ResponseEntity<>(managedUserVM, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

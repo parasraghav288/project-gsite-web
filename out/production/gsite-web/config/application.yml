@@ -29,9 +29,9 @@ ribbon:
 zuul:
     routes:
         gsitemanager:
-            url: http://gsite-manager:8082
+            url: http://gsite_manager:8082
         gsitecustomer:
-            url: http://gsite-customer:8081
+            url: http://gsite_customer:8081
 # See https://github.com/Netflix/Hystrix/wiki/Configuration
 hystrix:
     command:

@@ -1,5 +1,6 @@
 package com.gsite.app.web.rest.vm;
 
+import com.gsite.app.domain.User;
 import com.gsite.app.service.dto.UserDTO;
 import javax.validation.constraints.Size;
 
@@ -31,6 +32,12 @@ public class ManagedUserVM extends UserDTO {
             createdBy, createdDate, lastModifiedBy, lastModifiedDate,  authorities);
 
         this.password = password;
+    }
+
+
+    public ManagedUserVM(User user) {
+        super(user);
+        this.password = user.getPassword();
     }
 
     public String getPassword() {

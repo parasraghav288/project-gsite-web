@@ -26,18 +26,6 @@
                     resolve: {
                         entity: [function () {
                             return null;
-                        }],
-                        song: [function () {
-                            return null;
-                        }],
-                        photo: [function () {
-                            return null;
-                        }],
-                        webId: [function () {
-                            return null;
-                        }],
-                        userLogin: [function () {
-                            return null;
                         }]
                     }
                 },

@@ -141,16 +141,20 @@
                 onEnter: ['$stateParams', '$state', '$mdDialog', 'WebTemplate', 'TemplateStorage', function ($stateParams, $state, $mdDialog, WebTemplate, TemplateStorage) {
                     var confirm = $mdDialog.confirm()
                         .title('You delete this template?')
-                        .textContent('This template and its data will be lost forever!')
+                        .textContent('Notice! Cannot delete this template if having websites')
                         .ariaLabel('Lucky day')
                         .targetEvent(null)
                         .ok('Yes')
                         .cancel('Cancel');
 
                     $mdDialog.show(confirm).then(function () {
-                        WebTemplate.get({id: $stateParams.id}, function (data) {
+                        WebTemplate.get({
+                            id: $stateParams.id
+                        }, function (data) {
                             TemplateStorage.deleteTemplateImage(data.id, data.image);
-                            WebTemplate.delete({id: $stateParams.id});
+                            WebTemplate.delete({
+                                id: $stateParams.id
+                            });
                             $state.go('web-template', null, {
                                 reload: 'web-template'
                             });

@@ -4,6 +4,7 @@
         "name": "Name",
         "rating": "Rating",
         "category": "Category",
+        "source": "Source",
         "template": "Template",
         "date": "Date",
         "price": "Price",

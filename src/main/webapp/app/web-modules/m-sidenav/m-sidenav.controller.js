@@ -18,9 +18,11 @@
         }
 
         vm.website = entity;
-        vm.sidenav = vm.website.custom.sidenav;
-        if (vm.sidenav == null)
+
+        if (vm.website == null)
             loadDefault();
+        else
+            vm.sidenav = vm.website.custom.sidenav;
         // sidenav
         vm.toggleLeft = buildToggler('m-sidenav');
 
@@ -31,6 +33,19 @@
         }
 
         function loadDefault() {
+            vm.website = {
+                custom: {
+                    basicInfo: {
+                        isEnable: true
+                    },
+                    song: {
+                        isEnable: true
+                    },
+                    photo: {
+                        isEnable: true
+                    }
+                }
+            };
             vm.sidenav = {
                 isEnable: true,
                 title: 'About Person',

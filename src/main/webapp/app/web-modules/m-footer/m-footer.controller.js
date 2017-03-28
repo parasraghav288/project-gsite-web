@@ -11,7 +11,14 @@
         var vm = this;
 
         vm.website = entity;
-        vm.footer = vm.website.custom.footer;
+
+        if(vm.website == null)
+            loadDefault()
+        // else
+        //     vm.footer = vm.website.custom.footer;
+
+
+
         vm.changeEnglish = changeEnglish;
         vm.changeVietnam = changeVietnam;
         vm.homeState = $state.current.name;
@@ -28,5 +35,23 @@
         function changeVietnam() {
             LanguageService.changeLanguage('vi');
         }
+
+
+        function loadDefault() {
+            vm.website = {
+                custom: {
+                    basicInfo: {
+                        isEnable: true
+                    },
+                    song: {
+                        isEnable: true
+                    },
+                    photo: {
+                        isEnable: true
+                    }
+                }
+            };
+        }
+
     }
 })();

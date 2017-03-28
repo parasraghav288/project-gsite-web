@@ -3,11 +3,11 @@
 
     angular
         .module('gsiteApp')
-        .factory('subdomainHandler',subdomainHandler);
+        .factory('subdomainHandler', subdomainHandler);
 
-    subdomainHandler.$inject = ['$location','$state','Website'];
+    subdomainHandler.$inject = ['$location', '$state', 'Website'];
 
-    function subdomainHandler($location,$state,Website) {
+    function subdomainHandler($location, $state, Website) {
         var subdomain = null;
         var host = null;
 
@@ -23,7 +23,7 @@
         }
 
         function getHost(sub) {
-            if(sub != null)
+            if (sub != null)
                 sub = sub + ".";
 
             var fullHost = $location.protocol() + '://' + sub + host + ":" + $location.port()
@@ -33,23 +33,29 @@
 
 
         function loadSubdomain() {
-             host = $location.host();
-            if (host.indexOf('.') > 0) {
-                var array = host.split('.');
-                // if (array.size > 2)
-                    subdomain = array[0];
-                handleSubdomain(subdomain);
+            host = $location.host();
+            if (host.indexOf('.') <= 0)
+                return;
+            var array = host.split('.');
+            if (array.length > 2) {
+                subdomain = array[0];
+                if (subdomain != 'www')
+                    handleSubdomain(subdomain);
             }
         }
 
         function handleSubdomain(subdomain) {
             if (subdomain != null) {
-                Website.domain({domain: subdomain}, success, error);
+                Website.domain({
+                    domain: subdomain
+                }, success, error);
                 return;
             }
 
             function success(result) {
-                $state.go("view-website",{website: result});
+                $state.go("view-website", {
+                    website: result
+                });
             }
 
             function error() {
