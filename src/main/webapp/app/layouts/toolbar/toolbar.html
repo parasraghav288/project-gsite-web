@@ -4,7 +4,7 @@
             <md-icon class="material-icons">menu</md-icon>
         </md-button>
         <h2>
-            <a href="" ui-sref="home"><span>Gift Site</span></a>
+            <a href="" ui-sref="home"><span>{{vm.title}}</span></a>
         </h2>
         <span flex></span>
         <md-button class="md-icon-button" aria-label="Search" ng-click="showSearch = !showSearch; vm.search()">
@@ -41,7 +41,7 @@
             <md-icon class="material-icons">menu</md-icon>
         </md-button>
         <h2 hide-xs>
-            <span>Gift Site</span>
+            <span>{{vm.title}}</span>
         </h2>
         <md-button hide-gt-xs class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Back">
             <i class="material-icons">arrow_back</i>

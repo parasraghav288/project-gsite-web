@@ -10,6 +10,7 @@
     function ToolbarController($state, $timeout, ToolbarService, LanguageService, LoginService, Principal, TemplateSearch) {
 
         var vm = this;
+        vm.title = 'GSite (Beta)';
         vm.toggleSidenav = ToolbarService.toggleSidenav();
         vm.showLoginDialog = LoginService.open;
         vm.isAuthenticated = Principal.isAuthenticated;

@@ -10,5 +10,6 @@
     function FooterController($state) {
         var vm = this;
 
+        vm.title = 'GSite (Beta)';
     }
 })();
