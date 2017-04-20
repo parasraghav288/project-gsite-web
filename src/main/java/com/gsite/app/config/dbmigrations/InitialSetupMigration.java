@@ -2,22 +2,21 @@ package com.gsite.app.config.dbmigrations;
 
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
+import com.gsite.app.service.util.RandomUtil;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
-/**
- * Creates the initial database setup
- */
 @ChangeLog(order = "001")
 public class InitialSetupMigration {
 
-    private Map<String, String>[] authoritiesUser = new Map[] { new HashMap<>() };
+    private Map<String, String>[] authoritiesUser = new Map[]{new HashMap<>()};
 
-    private Map<String, String>[] authoritiesManager = new Map[] { new HashMap<>(), new HashMap<>() };
-    private Map<String, String>[] authoritiesAdmin = new Map[] { new HashMap<>(), new HashMap<>(), new HashMap<>() };
+    private Map<String, String>[] authoritiesManager = new Map[]{new HashMap<>(), new HashMap<>()};
+    private Map<String, String>[] authoritiesAdmin = new Map[]{new HashMap<>(), new HashMap<>(), new HashMap<>()};
 
     {
         authoritiesUser[0].put("_id", "ROLE_USER");
@@ -123,6 +122,7 @@ public class InitialSetupMigration {
             .get()
         );
     }
+
     @ChangeSet(author = "initiator", id = "03-addSocialUserConnection", order = "03")
     public void addSocialUserConnection(DB db) {
         DBCollection socialUserConnectionCollection = db.getCollection("social_user_connection");
@@ -132,6 +132,40 @@ public class InitialSetupMigration {
                 .add("provider_user_id", 1)
                 .get(),
             "user-prov-provusr-idx", true);
+    }
+
+    @ChangeSet(author = "initiator", id = "04-addTemplates", order = "04")
+    public void addTemplates(DB db) {
+        DBCollection templateCollection = db.getCollection("web_template");
+        templateCollection.createIndex("name");
+        templateCollection.insert(BasicDBObjectBuilder
+            .start("_id", "template-1")
+            .add("name", "The basic one")
+            .add("source", "basic-template")
+            .add("category", "sport")
+            .add("price", 0)
+            .add("image", null)
+            .add("created", new Date())
+            .get());
+        templateCollection.insert(BasicDBObjectBuilder
+            .start("_id", "template-2")
+            .add("name", "The latest one")
+            .add("source", "latest-template")
+            .add("category", "sport")
+            .add("price", 0)
+            .add("image", null)
+            .add("created", new Date())
+            .get());
+        templateCollection.insert(BasicDBObjectBuilder
+            .start("_id", "template-3")
+            .add("name", "The beauty")
+            .add("source", "beautiful-template")
+            .add("category", "sport")
+            .add("price", 5)
+            .add("image", null)
+            .add("created", new Date())
+            .get());
+
     }
 
 }

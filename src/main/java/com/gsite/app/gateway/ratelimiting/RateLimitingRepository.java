@@ -1,12 +1,13 @@
 package com.gsite.app.gateway.ratelimiting;
 
+import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Session;
+
 import java.util.Date;
 
-import com.datastax.driver.core.*;
 
-/**
- * Repository storing data used by the gateway's rate limiting filter.
- */
 public class RateLimitingRepository {
 
     private final Session session;

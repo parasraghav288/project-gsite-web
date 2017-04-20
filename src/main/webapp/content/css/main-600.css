@@ -6,7 +6,7 @@
     background-image: url("/content/images/bg/bg-home-panel.jpg");
     background-repeat: no-repeat;
     background-size: 100%; }
-    .m-home .m-home-panel p {
+    .m-home .m-home-panel .m-title {
       color: white;
       font-size: 20px; }
   .m-home div .m-home-panel-title {

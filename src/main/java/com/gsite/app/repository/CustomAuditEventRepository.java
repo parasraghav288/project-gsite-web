@@ -3,7 +3,6 @@ package com.gsite.app.repository;
 import com.gsite.app.config.Constants;
 import com.gsite.app.config.audit.AuditEventConverter;
 import com.gsite.app.domain.PersistentAuditEvent;
-
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.boot.actuate.audit.AuditEventRepository;
 import org.springframework.stereotype.Repository;
@@ -16,9 +15,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
-/**
- * An implementation of Spring Boot's AuditEventRepository.
- */
 @Repository
 public class CustomAuditEventRepository implements AuditEventRepository {
 

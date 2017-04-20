@@ -1,5 +1,5 @@
 <div class="m-custom-sidenav" layout="column">
-    <div class="m-sidenav-header" layout="row" layout-align="left center" ng-show="vm.isAuthenticated()">
+    <div class="m-sidenav-header" layout="row" layout-align="start center" ng-show="vm.isAuthenticated()">
         <div>
             <md-list-item>
                 <img ng-src="{{vm.userImage ? vm.userImage : '/content/images/icons/avatar.jpg'}}"
@@ -12,7 +12,7 @@
             <p></p>
         </div>
     </div>
-    <div class="m-sidenav-header" layout="row" layout-align="left center" ng-show="!vm.isAuthenticated()">
+    <div class="m-sidenav-header" layout="row" layout-align="start center" ng-show="!vm.isAuthenticated()">
         <div>
             <md-button class="md-fab" aria-label="Eat cake" ng-click="vm.showLoginDialog()">
                 <md-icon class="material-icons">perm_identity</md-icon>

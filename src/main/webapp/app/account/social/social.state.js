@@ -39,6 +39,12 @@
                 'content@': {
                     controller: 'SocialAuthController'
                 }
+            },
+            resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('social');
+                    return $translate.refresh();
+                }]
             }
         });
     }

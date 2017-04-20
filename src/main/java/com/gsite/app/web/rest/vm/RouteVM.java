@@ -1,12 +1,9 @@
 package com.gsite.app.web.rest.vm;
 
-import java.util.List;
-
 import org.springframework.cloud.client.ServiceInstance;
 
-/**
- * View Model that stores a route managed by the Gateway.
- */
+import java.util.List;
+
 public class RouteVM {
 
     private String path;

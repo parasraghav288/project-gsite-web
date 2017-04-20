@@ -5,6 +5,7 @@ import com.gsite.app.domain.User;
 import io.github.jhipster.config.JHipsterProperties;
 
 import org.apache.commons.lang3.CharEncoding;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -18,12 +19,6 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 
-/**
- * Service for sending e-mails.
- * <p>
- * We use the @Async annotation to send e-mails asynchronously.
- * </p>
- */
 @Service
 public class MailService {
 
@@ -55,7 +50,6 @@ public class MailService {
         log.debug("Send e-mail[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, subject, content);
 
-        // Prepare message using a Spring helper
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
@@ -104,5 +98,33 @@ public class MailService {
         String content = templateEngine.process("passwordResetEmail", context);
         String subject = messageSource.getMessage("email.reset.title", null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
+    }
+
+    @Async
+    public void sendSocialRegistrationValidationEmail(User user, String provider) {
+        if(StringUtils.isBlank(user.getEmail()))
+            return;
+        log.debug("Sending social registration validation e-mail to '{}'", user.getEmail());
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable("provider", StringUtils.capitalize(provider));
+        String content = templateEngine.process("socialRegistrationValidationEmail", context);
+        String subject = messageSource.getMessage("email.social.registration.title", null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
+    }
+
+    @Async
+    public void sendShareInvitation(String fromName, String toName, String lang, String toEmail, String webId){
+        log.debug("Sending share invitation to '{}'", toName);
+        Locale locale = Locale.forLanguageTag(lang);
+        Context context = new Context(locale);
+        context.setVariable("fromName", fromName);
+        context.setVariable("toName", toName);
+        context.setVariable("webId", webId);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("shareEmail", context);
+        String subject = messageSource.getMessage("email.share.title", null, locale);
+        sendEmail(toEmail, subject, content, false, true);
     }
 }

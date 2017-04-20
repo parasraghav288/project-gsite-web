@@ -10,7 +10,7 @@
     function SocialAuthController($state, $cookies, Auth) {
         var token = $cookies.get('social-authentication');
 
-        Auth.loginWithToken(token, false).then(function () {
+        Auth.loginWithToken(token, true).then(function () {
             $cookies.remove('social-authentication');
             Auth.authorize(true);
         }, function () {

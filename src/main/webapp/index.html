@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>GSite</title>
+    <title>GSite - Websites as gifts for someone</title>
     <meta name="description" content="">
     <meta name="google" value="notranslate">
     <meta name="viewport" content="width=device-width">
@@ -31,28 +31,19 @@
 <body ng-app="gsiteApp" ng-strict-di>
 
     <div layout-gt-md="row">
-        <div class="main-custom-sidenav" hide-xs hide-sm hide-md ui-view="custom-sidenav" ng-cloak></div>
-        <div class="main-content" layout="column" flex>
-            <md-content flex>
-                <div layout="column">
-                    <div ui-view="toolbar" ng-cloak></div>
-                    <div ui-view="sidenav" ng-cloak></div>
-                    <div ui-view="quicktool" ng-cloak></div>
+        <div hide-xs hide-sm hide-md ui-view="custom-sidenav" ng-cloak></div>
+        <div layout="column" layout-fill>
+            <div ui-view="toolbar" ng-cloak></div>
+            <div ui-view="sidenav" ng-cloak></div>
+            <div ui-view="quicktool" ng-cloak></div>
+            <div class="main-content" layout="column" flex>
+                <md-content flex>
                     <div ui-view="content" ng-cloak></div>
                     <div ui-view="footer" ng-cloak></div>
-                </div>
-            </md-content>
+                </md-content>
+            </div>
         </div>
     </div>
-    <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
-    <script>
-        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-        e.src='//www.google-analytics.com/analytics.js';
-        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-        ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>-->
 
     <!-- build:js app/vendor.js -->
     <!-- bower:js -->
@@ -129,7 +120,6 @@
     <script src="app/services/profiles/page-ribbon.directive.js"></script>
     <script src="app/services/mail/mail.service.js"></script>
     <script src="app/services/facebook/facebook.service.js"></script>
-    <script src="app/services/auth/sessions.service.js"></script>
     <script src="app/services/auth/register.service.js"></script>
     <script src="app/services/auth/principal.service.js"></script>
     <script src="app/services/auth/password-reset-init.service.js"></script>

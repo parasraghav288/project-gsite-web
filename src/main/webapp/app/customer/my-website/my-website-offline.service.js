@@ -73,7 +73,7 @@
         function updateWeb(website) {
             MyWebsite.update(website, success);
             function success() {
-                loadAll();
+                    loadAll();
                 $state.go("my-website");
             }
         }

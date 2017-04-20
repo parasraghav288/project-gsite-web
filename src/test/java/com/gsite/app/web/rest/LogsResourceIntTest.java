@@ -17,11 +17,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Test class for the LogsResource REST controller.
- *
- * @see LogsResource
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GsiteWebApp.class)
 public class LogsResourceIntTest {

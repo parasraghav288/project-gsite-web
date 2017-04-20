@@ -1,4 +1,3 @@
-// Generated on 2017-03-20 using generator-jhipster 4.0.7
 'use strict';
 
 var gulp = require('gulp'),
@@ -63,6 +62,19 @@ gulp.task('images', function () {
         .pipe(browserSync.reload({stream: true}));
 });
 
+gulp.task('media', function () {
+    return gulp.src(config.app + 'content/media/**')
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.dist + 'content/media'))
+        .pipe(gulp.dest(config.dist + 'content/media'))
+        .pipe(rev.manifest(config.revManifest, {
+            base: config.dist,
+            merge: true
+        }))
+        .pipe(gulp.dest(config.dist))
+        .pipe(browserSync.reload({stream: true}));
+});
+
 gulp.task('sass', function () {
     return es.merge(
         gulp.src(config.sassSrc)
@@ -97,11 +109,11 @@ gulp.task('inject:test', inject.test);
 
 gulp.task('inject:troubleshoot', inject.troubleshoot);
 
-gulp.task('assets:prod', ['images', 'styles', 'html', 'copy:swagger', 'copy:images'], build);
+gulp.task('assets:prod', ['images','media', 'styles', 'html', 'copy:swagger', 'copy:images'], build);
 
 gulp.task('html', function () {
     return gulp.src(config.app + 'app/**/*.html')
-        .pipe(htmlmin({collapseWhitespace: true}))
+        //.pipe(htmlmin({collapseWhitespace: true}))
         .pipe(templateCache({
             module: 'gsiteApp',
             root: 'app/',
@@ -138,7 +150,6 @@ gulp.task('ngconstant:prod', function () {
     .pipe(gulp.dest(config.app + 'app/'));
 });
 
-// check app for eslint errors
 gulp.task('eslint', function () {
     return gulp.src(['gulpfile.js', config.app + 'app/**/*.js'])
         .pipe(plumber({errorHandler: handleErrors}))
@@ -147,7 +158,6 @@ gulp.task('eslint', function () {
         .pipe(eslint.failOnError());
 });
 
-// check app for eslint errors anf fix some of them
 gulp.task('eslint:fix', function () {
     return gulp.src(config.app + 'app/**/*.js')
         .pipe(plumber({errorHandler: handleErrors}))

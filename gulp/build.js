@@ -21,6 +21,7 @@ var config = require('./config');
 
 var initTask = lazypipe()
     .pipe(sourcemaps.init);
+
 var jsTask = lazypipe()
     .pipe(ngAnnotate)
     .pipe(uglify);
@@ -37,8 +38,8 @@ module.exports = function() {
         '!' + config.app + 'swagger-ui/**/*',
         '!' + config.bower + '**/*.html'])
         .pipe(plumber({errorHandler: handleErrors}))
-        //init sourcemaps and prepend semicolon
-        .pipe(useref({}, initTask))
+        // //init sourcemaps and prepend semicolon
+        .pipe(useref())
         //append html templates
         .pipe(gulpIf('**/app.js', footer(templates)))
         .pipe(gulpIf('*.js', jsTask()))
@@ -46,6 +47,6 @@ module.exports = function() {
         .pipe(gulpIf('*.html', htmlmin({collapseWhitespace: true})))
         .pipe(gulpIf('**/*.!(html)', rev()))
         .pipe(revReplace({manifest: manifest}))
-        .pipe(sourcemaps.write('.'))
+        // .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.dist));
 };

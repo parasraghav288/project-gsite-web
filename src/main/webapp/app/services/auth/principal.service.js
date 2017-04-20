@@ -5,9 +5,9 @@
         .module('gsiteApp')
         .factory('Principal', Principal);
 
-    Principal.$inject = ['$q', 'Account', '$rootScope'];
+    Principal.$inject = ['$q', 'Account'];
 
-    function Principal($q, Account, $rootScope) {
+    function Principal($q, Account) {
         var _identity,
             _authenticated = false;
 

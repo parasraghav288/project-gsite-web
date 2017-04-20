@@ -1,19 +1,19 @@
 package com.gsite.app.config;
 
-import io.github.jhipster.config.JHipsterConstants;
-import io.github.jhipster.config.JHipsterProperties;
-import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
-
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.servlet.InstrumentedFilter;
 import com.codahale.metrics.servlets.MetricsServlet;
-
+import io.github.jhipster.config.JHipsterConstants;
+import io.github.jhipster.config.JHipsterProperties;
+import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
+import io.undertow.UndertowOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.*;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
-import io.undertow.UndertowOptions;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +22,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.servlet.*;
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.*;
-import javax.servlet.*;
+import java.util.EnumSet;
 
-/**
- * Configuration of web application with Servlet 3.0 APIs.
- */
 @Configuration
 public class WebConfigurer implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 
@@ -60,26 +57,15 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         log.info("Web application fully configured");
     }
 
-    /**
-     * Customize the Servlet engine: Mime types, the document root, the cache.
-     */
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
         MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
-        // IE issue, see https://github.com/jhipster/generator-jhipster/pull/711
         mappings.add("html", "text/html;charset=utf-8");
-        // CloudFoundry issue, see https://github.com/cloudfoundry/gorouter/issues/64
         mappings.add("json", "text/html;charset=utf-8");
         container.setMimeMappings(mappings);
-        // When running in an IDE or with ./gradlew bootRun, set location of the static web assets.
+
         setLocationForStaticAssets(container);
 
-        /*
-         * Enable HTTP/2 for Undertow - https://twitter.com/ankinson/status/829256167700492288
-         * HTTP/2 requires HTTPS, so HTTP requests will fallback to HTTP/1.1.
-         * See the JHipsterProperties class and your application-*.yml configuration files
-         * for more information.
-         */
         if (jHipsterProperties.getHttp().getVersion().equals(JHipsterProperties.Http.Version.V_2_0) &&
             container instanceof UndertowEmbeddedServletContainerFactory) {
 
@@ -102,23 +88,18 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         }
     }
 
-    /**
-     *  Resolve path prefix to static resources.
-     */
+
     private String resolvePathPrefix() {
         String fullExecutablePath = this.getClass().getResource("").getPath();
         String rootPath = Paths.get(".").toUri().normalize().getPath();
         String extractedPath = fullExecutablePath.replace(rootPath, "");
         int extractionEndIndex = extractedPath.indexOf("build/");
-        if(extractionEndIndex <= 0) {
+        if (extractionEndIndex <= 0) {
             return "";
         }
         return extractedPath.substring(0, extractionEndIndex);
     }
 
-    /**
-     * Initializes the caching HTTP Headers Filter.
-     */
     private void initCachingHttpHeadersFilter(ServletContext servletContext,
                                               EnumSet<DispatcherType> disps) {
         log.debug("Registering Caching HTTP Headers Filter");
@@ -131,9 +112,7 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         cachingHttpHeadersFilter.setAsyncSupported(true);
     }
 
-    /**
-     * Initializes Metrics.
-     */
+
     private void initMetrics(ServletContext servletContext, EnumSet<DispatcherType> disps) {
         log.debug("Initializing Metrics registries");
         servletContext.setAttribute(InstrumentedFilter.REGISTRY_ATTRIBUTE,

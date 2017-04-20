@@ -1,10 +1,9 @@
 package com.gsite.app.config;
 
-import com.gsite.app.security.*;
-import com.gsite.app.security.jwt.*;
-
-import io.github.jhipster.security.*;
-
+import com.gsite.app.security.AuthoritiesConstants;
+import com.gsite.app.security.jwt.JWTConfigurer;
+import com.gsite.app.security.jwt.TokenProvider;
+import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,10 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
 
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
-            TokenProvider tokenProvider,
-        CorsFilter corsFilter) {
-
+    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService, TokenProvider tokenProvider, CorsFilter corsFilter) {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
@@ -53,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         try {
             authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
-                    .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder());
         } catch (Exception e) {
             throw new BeanInitializationException("Security configuration failed", e);
         }
@@ -87,16 +83,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling()
             .authenticationEntryPoint(http401UnauthorizedEntryPoint())
-        .and()
+            .and()
             .csrf()
             .disable()
             .headers()
             .frameOptions()
             .disable()
-        .and()
+            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
+            .and()
             .authorizeRequests()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
@@ -104,16 +100,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/reset_password/init").permitAll()
             .antMatchers("/api/account/reset_password/finish").permitAll()
             .antMatchers("/api/profile-info").permitAll()
-            .antMatchers(HttpMethod.GET,"/gsitemanager/api/faq/**").permitAll()
-            .antMatchers(HttpMethod.GET,"/gsitemanager/api/web-templates/**").permitAll()
-            .antMatchers(HttpMethod.GET,"/gsitemanager/api/websites/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/gsitemanager/api/faq/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/gsitemanager/api/web-templates/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/gsitemanager/api/websites/**").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/v2/api-docs/**").permitAll()
             .antMatchers("/swagger-resources/configuration/ui").permitAll()
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
-        .and()
+            .and()
             .apply(securityConfigurerAdapter());
 
     }

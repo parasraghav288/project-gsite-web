@@ -12,9 +12,6 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.Assert.*;
 import static springfox.documentation.swagger2.web.Swagger2Controller.DEFAULT_URL;
 
-/**
- * Tests SwaggerBasePathRewritingFilter class.
- */
 public class SwaggerBasePathRewritingFilterTest {
 
     private SwaggerBasePathRewritingFilter filter = new SwaggerBasePathRewritingFilter();
@@ -28,9 +25,6 @@ public class SwaggerBasePathRewritingFilterTest {
         assertTrue(filter.shouldFilter());
     }
 
-    /**
-     * Zuul DebugFilter can be triggered by "deug" parameter.
-     */
     @Test
     public void shouldFilter_on_default_swagger_url_with_param() {
 

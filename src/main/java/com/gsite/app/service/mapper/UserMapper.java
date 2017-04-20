@@ -3,15 +3,13 @@ package com.gsite.app.service.mapper;
 import com.gsite.app.domain.Authority;
 import com.gsite.app.domain.User;
 import com.gsite.app.service.dto.UserDTO;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * Mapper for the entity User and its DTO UserDTO.
- */
 @Mapper(componentModel = "spring", uses = {})
 public interface UserMapper {
 
@@ -40,7 +38,7 @@ public interface UserMapper {
         return user;
     }
 
-    default Set<String> stringsFromAuthorities (Set<Authority> authorities) {
+    default Set<String> stringsFromAuthorities(Set<Authority> authorities) {
         return authorities.stream().map(Authority::getName)
             .collect(Collectors.toSet());
     }

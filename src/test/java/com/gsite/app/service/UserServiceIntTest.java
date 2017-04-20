@@ -20,11 +20,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-/**
- * Test class for the UserResource REST controller.
- *
- * @see UserService
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GsiteWebApp.class)
 public class UserServiceIntTest {

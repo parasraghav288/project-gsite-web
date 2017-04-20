@@ -21,7 +21,6 @@
             setSearchType: setSearchType
         };
 
-        loadAll();
 
         function getTemplates() {
             return templates;
