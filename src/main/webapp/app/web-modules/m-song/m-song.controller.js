@@ -5,9 +5,9 @@
         .module('gsiteApp')
         .controller('MSongController', MSongController);
 
-    MSongController.$inject = ['MSongService'];
+    MSongController.$inject = ['MSongService','$window'];
 
-    function MSongController(MSongService) {
+    function MSongController(MSongService,$window) {
         var vm = this;
 
         vm.songs = MSongService.getList();

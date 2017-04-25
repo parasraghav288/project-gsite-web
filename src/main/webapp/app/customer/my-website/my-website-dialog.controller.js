@@ -49,7 +49,7 @@
 
         function onSaveError(result) {
             vm.isSaving = false;
-            if (result.data != null) {
+            if (result.data.id != null) {
                 $mdDialog.hide();
                 $state.go("website-payment", {id: result.data.id});
             } else {

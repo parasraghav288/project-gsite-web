@@ -7,7 +7,7 @@
 
     MyWebsiteController.$inject = ['$scope', 'MyWebsiteOffline'];
 
-    function MyWebsiteController($scope, MyWebsiteOffline ) {
+    function MyWebsiteController($scope, MyWebsiteOffline) {
         var vm = this;
 
         vm.refuse = MyWebsiteOffline.refuse;

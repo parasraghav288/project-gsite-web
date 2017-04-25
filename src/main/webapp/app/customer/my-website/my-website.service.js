@@ -11,6 +11,7 @@
 
         return $resource(resourceUrl, {}, {
             'query': {method: 'GET', isArray: true},
+            'get': {method: 'GET'},
             'share': {method: 'GET', isArray: true, url:  'gsitecustomer/' +'api/mywebsites/share'},
             'create': {method: 'POST', url:  'gsitecustomer/' +'api/mywebsites/create'},
             'delete': {method: 'DELETE', url:  'gsitecustomer/' +'api/mywebsites/delete'},

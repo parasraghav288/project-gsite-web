@@ -1,18 +1,20 @@
 package com.gsite.app.config;
 
-import com.datastax.driver.core.Session;
 import com.gsite.app.gateway.accesscontrol.AccessControlFilter;
-import com.gsite.app.gateway.ratelimiting.RateLimitingFilter;
-import com.gsite.app.gateway.ratelimiting.RateLimitingRepository;
 import com.gsite.app.gateway.responserewriting.SwaggerBasePathRewritingFilter;
-import io.github.jhipster.config.JHipsterProperties;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import com.gsite.app.web.rest.errors.CustomFallbackProvider;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
+import org.springframework.cloud.netflix.zuul.filters.route.ZuulFallbackProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class GatewayConfiguration {
+
+    @Bean
+    public ZuulFallbackProvider myFallbackProvider() {
+        return new CustomFallbackProvider();
+    }
 
     @Configuration
     public static class SwaggerBasePathRewritingConfiguration {
@@ -27,29 +29,9 @@ public class GatewayConfiguration {
     public static class AccessControlFilterConfiguration {
 
         @Bean
-        public AccessControlFilter accessControlFilter(RouteLocator routeLocator, JHipsterProperties jHipsterProperties){
-            return new AccessControlFilter(routeLocator, jHipsterProperties);
+        public AccessControlFilter accessControlFilter(RouteLocator routeLocator, ApplicationProperties applicationProperties){
+            return new AccessControlFilter(routeLocator, applicationProperties);
         }
     }
 
-    @Configuration
-    @ConditionalOnProperty("jhipster.gateway.rate-limiting.enabled")
-    public static class RateLimitingConfiguration {
-
-        private final JHipsterProperties jHipsterProperties;
-
-        public RateLimitingConfiguration(JHipsterProperties jHipsterProperties) {
-            this.jHipsterProperties = jHipsterProperties;
-        }
-
-        @Bean
-        public RateLimitingRepository rateLimitingRepository(Session session) {
-            return new RateLimitingRepository(session);
-        }
-
-        @Bean
-        public RateLimitingFilter rateLimitingFilter(RateLimitingRepository rateLimitingRepository) {
-            return new RateLimitingFilter(rateLimitingRepository, jHipsterProperties);
-        }
-    }
 }

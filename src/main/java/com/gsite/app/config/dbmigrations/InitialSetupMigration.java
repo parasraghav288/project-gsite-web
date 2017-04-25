@@ -82,7 +82,7 @@ public class InitialSetupMigration {
         usersCollection.insert(BasicDBObjectBuilder.start()
             .add("_id", "user-2")
             .add("login", "admin")
-            .add("password", "$2a$10$f8DCLcky1.14MkEMiGVOS.Pihrdl5Vj4TeTXctncVzAyk4KlBW6cu")
+            .add("password", "$2a$10$Rny02OnnWr/dhozshakTd.KW3jMHIHDuKOXU0TjIRvI5jx0OoE00G")
             .add("first_name", "admin")
             .add("last_name", "Administrator")
             .add("email", "admin@localhost")
@@ -96,7 +96,7 @@ public class InitialSetupMigration {
         usersCollection.insert(BasicDBObjectBuilder.start()
             .add("_id", "user-3")
             .add("login", "manager")
-            .add("password", "$2a$10$ZZNZ0xgt0FStCzsPubwCP.NeuKv5jTTtuR3oTqwocqfgJqXvCP6bm")
+            .add("password", "$2a$10$hNZLbJmcEKnMQy5byOG43.H3vbZ57lfdsWeifoEvvfSr/XBTZhuyi")
             .add("first_name", "")
             .add("last_name", "Manager")
             .add("email", "manager@localhost")
@@ -110,7 +110,7 @@ public class InitialSetupMigration {
         usersCollection.insert(BasicDBObjectBuilder.start()
             .add("_id", "user-5")
             .add("login", "user")
-            .add("password", "$2a$10$PW3SD..IAjBpWBxHVzzRCu5JdHhjKTkW1ygzhH5xqs7iyfJmorBtO")
+            .add("password", "$2a$10$qInfLlH5J/5MxF.zDgU8ielbBPJ88DtpugJ/1IswNeUXJ6y1xPW7q")
             .add("first_name", "")
             .add("last_name", "User")
             .add("email", "user@localhost")
@@ -134,38 +134,6 @@ public class InitialSetupMigration {
             "user-prov-provusr-idx", true);
     }
 
-    @ChangeSet(author = "initiator", id = "04-addTemplates", order = "04")
-    public void addTemplates(DB db) {
-        DBCollection templateCollection = db.getCollection("web_template");
-        templateCollection.createIndex("name");
-        templateCollection.insert(BasicDBObjectBuilder
-            .start("_id", "template-1")
-            .add("name", "The basic one")
-            .add("source", "basic-template")
-            .add("category", "sport")
-            .add("price", 0)
-            .add("image", null)
-            .add("created", new Date())
-            .get());
-        templateCollection.insert(BasicDBObjectBuilder
-            .start("_id", "template-2")
-            .add("name", "The latest one")
-            .add("source", "latest-template")
-            .add("category", "sport")
-            .add("price", 0)
-            .add("image", null)
-            .add("created", new Date())
-            .get());
-        templateCollection.insert(BasicDBObjectBuilder
-            .start("_id", "template-3")
-            .add("name", "The beauty")
-            .add("source", "beautiful-template")
-            .add("category", "sport")
-            .add("price", 5)
-            .add("image", null)
-            .add("created", new Date())
-            .get());
 
-    }
 
 }

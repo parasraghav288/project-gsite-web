@@ -4,16 +4,17 @@
         .module('gsiteApp')
         .factory('MyQuestionService', MyQuestionService);
 
-    MyQuestionService.$inject = ['$rootScope', 'Question', 'Principal','$resource'];
+    MyQuestionService.$inject = ['$rootScope', 'Principal','$resource'];
 
-    function MyQuestionService($rootScope, Question, Principal,$resource) {
+    function MyQuestionService($rootScope, Principal,$resource) {
 
         var resourceUrl = 'gsitecustomer/' + 'api/myquestions';
         var resource = $resource(resourceUrl, {}, {
             'all': {
                 method: 'GET',
                 isArray: true
-            }
+            },
+            'create': { method: 'POST'}
         });
 
         var instance = {
@@ -53,7 +54,7 @@
 
         function add(question) {
             question.user_id = userId;
-            Question.save(question, onSaveSuccess, onSaveError);
+            resource.create(question, onSaveSuccess, onSaveError);
 
             function onSaveSuccess(result) {
                 loadAll(userId);

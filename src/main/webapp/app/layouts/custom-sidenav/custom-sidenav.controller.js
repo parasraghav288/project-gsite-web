@@ -21,12 +21,10 @@
         vm.userEmail = null;
         vm.userImage = null;
 
-
         getUserInfo();
 
         function getUserInfo() {
             Principal.identity().then(function (user) {
-                console.log(user);
                 if (user == null)
                     return;
                 vm.userEmail = user.email;

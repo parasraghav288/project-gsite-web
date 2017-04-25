@@ -51,6 +51,8 @@ public class SwaggerBasePathRewritingFilter extends SendResponseFilter {
 
     private String rewriteBasePath(RequestContext context) {
         InputStream responseDataStream = context.getResponseDataStream();
+        if (responseDataStream == null)
+            return null;
         String requestUri = RequestContext.getCurrentContext().getRequest().getRequestURI();
         try {
             if (context.getResponseGZipped()) {

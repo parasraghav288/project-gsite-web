@@ -21,6 +21,7 @@
             setSearchType: setSearchType
         };
 
+        loadAll();
 
         function getTemplates() {
             return templates;
@@ -74,6 +75,9 @@
                     TemplateStorage.loadImageForWebTemplateItem(template.id,template,"mainImage.jpg");
                 }
             }
+        }
+
+        function loadDefaultImages() {
 
         }
 

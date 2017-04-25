@@ -1,12 +1,15 @@
 package com.gsite.app.security.jwt;
 
+import com.gsite.app.config.ApplicationProperties;
 import com.gsite.app.security.AuthoritiesConstants;
-import io.github.jhipster.config.JHipsterProperties;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,15 +24,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TokenProviderTest {
 
+    private final Logger log = LoggerFactory.getLogger(TokenProviderTest.class);
+
     private final String secretKey = "e5c9ee274ae87bc031adda32e27fa98b9290da83";
     private final long ONE_MINUTE = 60000;
-    private JHipsterProperties jHipsterProperties;
+    private ApplicationProperties applicationProperties;
     private TokenProvider tokenProvider;
 
     @Before
     public void setup() {
-        jHipsterProperties = Mockito.mock(JHipsterProperties.class);
-        tokenProvider = new TokenProvider(jHipsterProperties);
+        applicationProperties = Mockito.mock(ApplicationProperties.class);
+        tokenProvider = new TokenProvider(applicationProperties);
         ReflectionTestUtils.setField(tokenProvider, "secretKey", secretKey);
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", ONE_MINUTE);
     }
@@ -103,5 +108,19 @@ public class TokenProviderTest {
             .signWith(SignatureAlgorithm.HS512, "e5c9ee274ae87bc031adda32e27fa98b9290da90")
             .setExpiration(new Date(new Date().getTime() + ONE_MINUTE))
             .compact();
+    }
+
+
+    @Test
+    public void getTestingToken() {
+        String secretKey = "8a1d3b6fa9e302c0415b6d650e9911443f953fd3";
+        String token = TokenProvider.createTestToken(secretKey);
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n\n========================Token========================\n");
+        sb.append(token);
+        sb.append("\n=====================================================\n");
+        log.info(sb.toString());
+        assertThat(token).isNotEmpty();
+
     }
 }

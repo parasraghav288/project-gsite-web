@@ -19,7 +19,8 @@
         vm.showLoginDialog = LoginService.open;
         vm.goFeatureSec = goFeatureSec;
         vm.goHomeSec = goHomeSec;
-        vm.changeLanguage = changeLanguage;
+        vm.changeEnglish = changeEnglish;
+        vm.changeVietnam = changeVietnam;
 
         vm.username = null;
         vm.userEmail = null;
@@ -73,8 +74,12 @@
         }
 
 
-        function changeLanguage() {
-            LanguageService.changeLanguage(vm.langKey);
+        function changeEnglish() {
+            LanguageService.changeLanguage('en');
+        }
+
+        function changeVietnam() {
+            LanguageService.changeLanguage('vi');
         }
     }
 })();

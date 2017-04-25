@@ -1,7 +1,8 @@
 package com.gsite.app.web.rest;
 
-import io.github.jhipster.config.JHipsterProperties;
+
 import com.gsite.app.GsiteWebApp;
+import com.gsite.app.config.ApplicationProperties;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,7 @@ public class ProfileInfoResourceIntTest {
     private Environment environment;
 
     @Mock
-    private JHipsterProperties jHipsterProperties;
+    private ApplicationProperties applicationProperties;
 
     private MockMvc restProfileMockMvc;
 
@@ -35,15 +36,15 @@ public class ProfileInfoResourceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         String mockProfile[] = {"test"};
-        JHipsterProperties.Ribbon ribbon = new JHipsterProperties.Ribbon();
+        ApplicationProperties.Ribbon ribbon = new ApplicationProperties.Ribbon();
         ribbon.setDisplayOnActiveProfiles(mockProfile);
-        when(jHipsterProperties.getRibbon()).thenReturn(ribbon);
+        when(applicationProperties.getRibbon()).thenReturn(ribbon);
 
         String activeProfiles[] = {"test"};
         when(environment.getDefaultProfiles()).thenReturn(activeProfiles);
         when(environment.getActiveProfiles()).thenReturn(activeProfiles);
 
-        ProfileInfoResource profileInfoResource = new ProfileInfoResource(environment, jHipsterProperties);
+        ProfileInfoResource profileInfoResource = new ProfileInfoResource(environment, applicationProperties);
         this.restProfileMockMvc = MockMvcBuilders
             .standaloneSetup(profileInfoResource)
             .build();
@@ -58,9 +59,9 @@ public class ProfileInfoResourceIntTest {
 
     @Test
     public void getProfileInfoWithoutRibbon() throws Exception {
-        JHipsterProperties.Ribbon ribbon = new JHipsterProperties.Ribbon();
+        ApplicationProperties.Ribbon ribbon = new ApplicationProperties.Ribbon();
         ribbon.setDisplayOnActiveProfiles(null);
-        when(jHipsterProperties.getRibbon()).thenReturn(ribbon);
+        when(applicationProperties.getRibbon()).thenReturn(ribbon);
 
         restProfileMockMvc.perform(get("/api/profile-info"))
             .andExpect(status().isOk())

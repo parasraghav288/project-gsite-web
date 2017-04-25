@@ -1,9 +1,9 @@
 package com.gsite.app.config;
 
 import com.gsite.app.security.AuthoritiesConstants;
+import com.gsite.app.security.Http401UnauthorizedEntryPoint;
 import com.gsite.app.security.jwt.JWTConfigurer;
 import com.gsite.app.security.jwt.TokenProvider;
-import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,9 @@
 package com.gsite.app.security.social;
 
 
+import com.gsite.app.config.ApplicationProperties;
 import com.gsite.app.security.jwt.TokenProvider;
-import io.github.jhipster.config.JHipsterProperties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +28,7 @@ public class CustomSignInAdapter implements SignInAdapter {
     private UserDetailsService userDetailsService;
 
     @Inject
-    private JHipsterProperties jHipsterProperties;
+    private ApplicationProperties applicationProperties;
 
     @Inject
     private TokenProvider tokenProvider;
@@ -48,7 +49,7 @@ public class CustomSignInAdapter implements SignInAdapter {
         } catch (AuthenticationException exception) {
             log.error("Social authentication error");
         }
-        return jHipsterProperties.getSocial().getRedirectAfterSignIn();
+        return applicationProperties.getSocial().getRedirectAfterSignIn();
     }
 
     private Cookie getSocialAuthenticationCookie(String token) {

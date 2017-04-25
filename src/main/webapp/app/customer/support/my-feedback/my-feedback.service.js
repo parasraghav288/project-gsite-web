@@ -4,16 +4,17 @@
         .module('gsiteApp')
         .factory('MyFeedbackService', MyFeedbackService);
 
-    MyFeedbackService.$inject = ['$rootScope', '$resource','Feedback', 'Principal'];
+    MyFeedbackService.$inject = ['$rootScope', '$resource', 'Principal'];
 
-    function MyFeedbackService($rootScope, $resource,Feedback, Principal) {
+    function MyFeedbackService($rootScope, $resource, Principal) {
 
         var resourceUrl = 'gsitecustomer/' +'api/myfeedbacks';
         var resource = $resource(resourceUrl, {}, {
             'all': {
                 method: 'GET',
                 isArray: true
-            }
+            },
+            'create': {method: 'POST'},
         });
 
         var instance = {
@@ -49,7 +50,7 @@
 
         function add(feedback) {
             feedback.user_id = userId;
-            Feedback.save(feedback, onSaveSuccess, onSaveError);
+            resource.create(feedback, onSaveSuccess, onSaveError);
 
             function onSaveSuccess(result) {
                 loadAll(userId);

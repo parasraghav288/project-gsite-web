@@ -35,16 +35,14 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    private final WebsiteService websiteService;
 
     @Inject
     private SocialService socialService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, WebsiteService websiteService) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
-        this.websiteService = websiteService;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -177,20 +175,11 @@ public class UserService {
     }
 
     public boolean deleteUser(String login) {
-        if (!isDeleted(login))
-            return false;
         userRepository.findOneByLogin(login).ifPresent(user -> {
             socialService.deleteUserSocialConnection(user.getLogin());
             userRepository.delete(user);
             log.debug("Deleted User: {}", user);
         });
-
-        return true;
-    }
-
-    private boolean isDeleted(String login) {
-        if (!websiteService.findAllByUserID(login).isEmpty())
-            return false;
 
         return true;
     }

@@ -1,8 +1,5 @@
 beforeEach(module('gsiteApp'));
-/**
- * returns a function whose angular will be replaced
- * with whatever mock was supplied.
- */
+
 function withMockedAngular(mockAngular, fn) {
     return function() {
         var _angular = window.angular;

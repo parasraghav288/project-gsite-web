@@ -129,8 +129,8 @@
                         $translatePartialLoader.addPart('my-website');
                         return $translate.refresh();
                     }],
-                    entity: ['$stateParams', 'Website', function ($stateParams, Website) {
-                        return Website.get({
+                    entity: ['$stateParams', 'MyWebsite', function ($stateParams, MyWebsite) {
+                        return MyWebsite.get({
                             id: $stateParams.id
                         }).$promise;
                     }],
@@ -159,8 +159,8 @@
                         controllerAs: 'vm',
                         clickOutsideToClose: true,
                         resolve: {
-                            entity: ['$stateParams', 'Website', function ($stateParams, Website) {
-                                return Website.get({
+                            entity: ['$stateParams', 'MyWebsite', function ($stateParams, MyWebsite) {
+                                return MyWebsite.get({
                                     id: $stateParams.id
                                 }).$promise;
                             }],
@@ -193,8 +193,8 @@
                     }
                 },
                 resolve: {
-                    entity: ['$stateParams', 'Website', function ($stateParams, Website) {
-                        return Website.get({
+                    entity: ['$stateParams', 'MyWebsite', function ($stateParams, MyWebsite) {
+                        return MyWebsite.get({
                             id: $stateParams.id
                         });
                     }]

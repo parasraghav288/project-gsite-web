@@ -4,9 +4,9 @@
         .module('gsiteApp')
         .factory('MyWebsiteOffline', MyWebsiteOffline);
 
-    MyWebsiteOffline.$inject = ['$rootScope', '$state', 'MyWebsite', 'Principal', 'Website', 'MyWebsiteStorage'];
+    MyWebsiteOffline.$inject = ['$rootScope', '$state', 'MyWebsite', 'Principal', 'MyWebsiteStorage'];
 
-    function MyWebsiteOffline($rootScope, $state, MyWebsite, Principal, Website, MyWebsiteStorage) {
+    function MyWebsiteOffline($rootScope, $state, MyWebsite, Principal, MyWebsiteStorage) {
         var service = {
             subscribe: subscribe,
             all: all,
@@ -21,10 +21,12 @@
         var websites = [];
 
         function all() {
+            if(websites.length == 0)
+                reloadAll();
+
             return websites;
         }
 
-        checkUser();
 
         function checkUser() {
             Principal.identity().then(function (account) {
@@ -47,17 +49,23 @@
             websites = [];
             MyWebsite.query({
                 user_id: userLogin
-            }, onSuccess);
+            }, onAllSuccess);
+
+            function onAllSuccess(result) {
+                loadImages(result);
+                websites = result;
+                notify();
+            }
 
             MyWebsite.share({
                 user_email: userEmail
-            }, onSuccess);
-        }
+            }, onShareSuccess);
 
-        function onSuccess(result) {
-            loadImages(result);
-            websites = websites.concat(result);
-            notify();
+            function onShareSuccess(result) {
+                loadImages(result);
+                websites = websites.concat(result);
+                notify();
+            }
         }
 
         function loadImages(list) {
@@ -79,7 +87,7 @@
         }
 
         function deleteWeb(id) {
-            Website.delete({
+           MyWebsite.delete({
                 id: id
             }, success);
 
@@ -91,12 +99,12 @@
         }
 
         function refuse(id) {
-            Website.get({
+           MyWebsite.get({
                 id: id
             }, function (web) {
                 var index = web.sharedUsers.indexOf(userEmail);
                 web.sharedUsers.splice(index, 1);
-                Website.update(web, onRefuseSuccess);
+               MyWebsite.update(web, onRefuseSuccess);
             });
         }
 

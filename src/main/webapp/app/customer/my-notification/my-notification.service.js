@@ -4,15 +4,16 @@
         .module('gsiteApp')
         .factory('MyNotificationService', MyNotificationService);
 
-    MyNotificationService.$inject = ['$rootScope', 'Principal', '$resource','Notification'];
+    MyNotificationService.$inject = ['$rootScope', 'Principal', '$resource'];
 
-    function MyNotificationService($rootScope, Principal, $resource,Notification) {
+    function MyNotificationService($rootScope, Principal, $resource) {
         var resourceUrl = 'gsitecustomer/' + 'api/mynotifications';
         var resource = $resource(resourceUrl, {}, {
             'all': {
                 method: 'GET',
                 isArray: true
-            }
+            },
+            'delete':{method: 'DELETE'}
         });
 
         var instance = {
@@ -52,7 +53,7 @@
 
 
         function del(id) {
-            Notification.delete({
+            resource.delete({
                 id: id
             }, onSuccess, onError);
 

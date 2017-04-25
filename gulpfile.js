@@ -113,7 +113,7 @@ gulp.task('assets:prod', ['images','media', 'styles', 'html', 'copy:swagger', 'c
 
 gulp.task('html', function () {
     return gulp.src(config.app + 'app/**/*.html')
-        //.pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(templateCache({
             module: 'gsiteApp',
             root: 'app/',

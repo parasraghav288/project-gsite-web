@@ -1,6 +1,7 @@
-<md-card>
+<div class="m-dialog-panel">
     <md-card-content>
         <span class="error-text" ng-show="vm.isDomainError">Sub domain is already existed!</span>
+        <p></p>
         <form name="Form" layout="column" ng-submit="vm.save()">
             <md-input-container>
                 <label data-translate="myWebsite.name">Name</label>
@@ -24,4 +25,4 @@
             </div>
         </form>
     </md-card-content>
-</md-card>
+</div>

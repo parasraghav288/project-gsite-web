@@ -3,14 +3,29 @@ zuul:
     host:
         connect-timeout-millis: 5000
         socket-timeout-millis: 10000
+    routes:
+        gsitemanager:
+            path: /gsitemanager/**
+            serviceId: gsitemanager
+            stripPrefix: false
+        gsitecustomer:
+            path: /gsitecustomer/**
+            serviceId: gsitecustomer
+            stripPrefix: false
 
-hystrix:
-    command:
-        default:
-            execution:
-                isolation:
-                    thread:
-                        timeoutInMilliseconds: 10000
+ribbon:
+    eureka:
+        enabled: false
+    restclient:
+        enabled: false
+
+gsitemanager:
+    ribbon:
+        listOfServers: localhost:8082
+
+gsitecustomer:
+    ribbon:
+        listOfServers: localhost:8081
 
 management:
     security:
@@ -19,6 +34,7 @@ management:
     health:
         mail:
             enabled: false
+
 spring:
     application:
         name: gsite
@@ -66,7 +82,7 @@ storage:
     url:
         image: /
 
-jhipster:
+application:
     async:
         core-pool-size: 2
         max-pool-size: 50
@@ -89,5 +105,3 @@ jhipster:
             redirectAfterSignIn: "/social-auth"
     ribbon:
         display-on-active-profiles: dev
-
-application:

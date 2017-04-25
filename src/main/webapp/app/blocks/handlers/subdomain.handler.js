@@ -37,7 +37,7 @@
             if (host.indexOf('.') <= 0)
                 return;
             var array = host.split('.');
-            if (array.length > 2) {
+            if (array.length > 2 || array[1] == 'localhost') {
                 subdomain = array[0];
                 if (subdomain != 'www')
                     handleSubdomain(subdomain);

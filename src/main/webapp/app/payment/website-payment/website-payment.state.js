@@ -30,8 +30,8 @@
                     $translatePartialLoader.addPart('website-payment');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Website', function ($stateParams, Website) {
-                    return Website.get({id: $stateParams.id}).$promise;
+                entity: ['$stateParams', 'MyWebsite', function ($stateParams, MyWebsite) {
+                    return MyWebsite.get({id: $stateParams.id}).$promise;
                 }]
             }
         }).state('website-payment.pay', {
@@ -51,8 +51,8 @@
                     $translatePartialLoader.addPart('website-payment');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Website', function ($stateParams, Website) {
-                    return Website.get({id: $stateParams.id}).$promise;
+                entity: ['$stateParams', 'MyWebsite', function ($stateParams, MyWebsite) {
+                    return MyWebsite.get({id: $stateParams.id}).$promise;
                 }]
             }
         });

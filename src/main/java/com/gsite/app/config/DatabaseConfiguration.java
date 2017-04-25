@@ -2,7 +2,7 @@ package com.gsite.app.config;
 
 import com.github.mongobee.Mongobee;
 import com.mongodb.Mongo;
-import io.github.jhipster.config.JHipsterConstants;
+
 import io.github.jhipster.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
 import io.github.jhipster.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
 import org.slf4j.Logger;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@Profile("!" + JHipsterConstants.SPRING_PROFILE_CLOUD)
 @EnableMongoRepositories("com.gsite.app.repository")
 @Import(value = MongoAutoConfiguration.class)
 @EnableMongoAuditing(auditorAwareRef = "springSecurityAuditorAware")

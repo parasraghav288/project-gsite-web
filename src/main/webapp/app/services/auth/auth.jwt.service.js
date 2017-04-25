@@ -5,7 +5,7 @@
         .module('gsiteApp')
         .factory('AuthServerProvider', AuthServerProvider);
 
-    AuthServerProvider.$inject = ['$http','$rootScope', '$localStorage', '$sessionStorage', '$q','Account','MyWebsiteOffline'];
+    AuthServerProvider.$inject = ['$http','$rootScope', '$localStorage', '$sessionStorage', '$q','Account'];
 
     function AuthServerProvider ($http, $rootScope,$localStorage, $sessionStorage, $q,Account) {
         var service = {
@@ -39,6 +39,7 @@
                     service.storeAuthenticationToken(jwt, credentials.rememberMe);
                     return jwt;
                 }
+
             }
         }
 
@@ -47,7 +48,7 @@
             if (angular.isDefined(jwt)) {
                 this.storeAuthenticationToken(jwt, rememberMe);
                 deferred.resolve(jwt);
-                loadDefaultUserData();
+
             } else {
                 deferred.reject();
             }
@@ -55,6 +56,7 @@
         }
 
         function storeAuthenticationToken(jwt, rememberMe) {
+            loadDefaultUserData();
             if(rememberMe){
                 $localStorage.authenticationToken = jwt;
             } else {
@@ -78,6 +80,7 @@
         }
 
         function loadDefaultUserData() {
+            notify();
             Account.social().$promise
                 .then(getSocialAccountThen);
         }

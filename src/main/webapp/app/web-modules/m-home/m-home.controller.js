@@ -67,17 +67,17 @@
             };
             vm.photos = [
                 {
-                    name: 'kaka-photo',
+                    name: 'Ricardo Kaka',
                     des: 'Real win in champion league. This is the most viewed photo of Ricardo Kaka.',
                     tempLink: 'content/images/photos/kaka-photo.jpg'
                 },
                 {
-                    name: 'chelsea-arse',
+                    name: 'Chelsea vs Arsenal',
                     des: 'Best match, we should not miss in sunday',
                     tempLink: 'content/images/photos/chelsea-arse.jpg'
                 },
                 {
-                    name: 'chelsea-liv',
+                    name: 'Chelsea vs Liverpool',
                     des: 'Super match with chelsea and liverpool',
                     tempLink: 'content/images/photos/chelsea-liv.jpg'
                 }
