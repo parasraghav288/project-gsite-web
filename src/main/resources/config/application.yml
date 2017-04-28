@@ -7,16 +7,12 @@ zuul:
         gsitemanager:
             path: /gsitemanager/**
             serviceId: gsitemanager
-            stripPrefix: false
         gsitecustomer:
             path: /gsitecustomer/**
             serviceId: gsitecustomer
-            stripPrefix: false
 
 ribbon:
     eureka:
-        enabled: false
-    restclient:
         enabled: false
 
 gsitemanager:

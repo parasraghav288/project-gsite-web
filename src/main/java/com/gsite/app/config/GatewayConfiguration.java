@@ -3,12 +3,16 @@ package com.gsite.app.config;
 import com.gsite.app.gateway.accesscontrol.AccessControlFilter;
 import com.gsite.app.gateway.responserewriting.SwaggerBasePathRewritingFilter;
 import com.gsite.app.web.rest.errors.CustomFallbackProvider;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.cloud.netflix.zuul.filters.route.ZuulFallbackProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableZuulProxy
+@EnableCircuitBreaker
 public class GatewayConfiguration {
 
     @Bean

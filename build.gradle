@@ -175,6 +175,7 @@ dependencies {
     compile "com.datastax.cassandra:cassandra-driver-extras:" + dependencyManagement.managedVersions["com.datastax.cassandra:cassandra-driver-core"]
     compile "com.datastax.cassandra:cassandra-driver-mapping"
     compile "org.springframework.cloud:spring-cloud-starter-zuul"
+    compile "org.springframework.cloud:spring-cloud-starter-actuator"
     compile "org.springframework.cloud:spring-cloud-starter"
     compile "org.springframework.cloud:spring-cloud-starter-ribbon"
     compile "org.springframework.cloud:spring-cloud-starter-hystrix"

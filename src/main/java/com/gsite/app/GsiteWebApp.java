@@ -29,8 +29,6 @@ import java.util.Collection;
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class, MetricsDropwizardAutoConfiguration.class})
 @EnableConfigurationProperties({ApplicationProperties.class})
-@EnableZuulProxy
-@EnableCircuitBreaker
 public class GsiteWebApp {
 
     private static final Logger log = LoggerFactory.getLogger(GsiteWebApp.class);
