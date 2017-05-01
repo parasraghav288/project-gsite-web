@@ -22,19 +22,19 @@
             subscribe: subscribe
         };
 
-        var userId = null;
+        var userEmail = null;
 
         var list = [];
 
         Principal.identity().then(function (account) {
-            userId = account.id;
-            loadAll(account.id);
+            userEmail = account.email;
+            loadAll(account.email);
         });
 
 
-        function loadAll(userId) {
+        function loadAll(userEmail) {
             resource.all({
-                userId: userId
+                userEmail: userEmail
             }, onSuccess, onError);
 
             function onSuccess(data) {
@@ -54,11 +54,12 @@
 
         function del(id) {
             resource.delete({
-                id: id
+                id: id,
+                userEmail: userEmail
             }, onSuccess, onError);
 
             function onSuccess(data) {
-                notify();
+                loadAll(userEmail);
             }
 
             function onError(error) {

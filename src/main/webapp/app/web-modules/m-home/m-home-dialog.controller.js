@@ -12,14 +12,14 @@
 
         vm.homepage = entity;
         var fileName = 'mainImage.jpg';
-        var userLogin = null;
+        var userId = null;
 
         vm.loading = false;
 
         vm.upload = upload;
 
         Principal.identity().then(function (user) {
-            userLogin = user.login;
+            userId = user.id;
             getMainImage();
         });
 
@@ -27,7 +27,7 @@
         function upload(file) {
             if (file != null) {
                 vm.loading = true;
-                MyWebsiteStorage.uploadUserWebImage(userLogin, webId, file, fileName).then(onSuccess, onError);
+                MyWebsiteStorage.uploadUserWebImage(userId, webId, file, fileName).then(onSuccess, onError);
             }
 
             function onSuccess(response) {
@@ -42,12 +42,12 @@
         }
 
         function getMainImage() {
-            if (vm.homepage.mainImage == 'none')
+            if (vm.homepage.mainImage == null)
                 return;
             if(vm.homepage.tempImageLink != null)
                 return;
 
-            MyWebsiteStorage.getUserWebImage(userLogin, webId, fileName).then(onSuccess, onError);
+            MyWebsiteStorage.getUserWebImage(userId, webId, fileName).then(onSuccess, onError);
             function onSuccess(response) {
                 vm.homepage.tempImageLink = response.data.link;
             }

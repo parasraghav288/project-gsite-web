@@ -59,7 +59,7 @@
             params: {
                 template_id: null
             },
-            onEnter: ['$stateParams', '$state','Notification', function ($stateParams, $state,MyNotificationService) {
+            onEnter: ['$stateParams', '$state','MyNotificationService', function ($stateParams, $state,MyNotificationService) {
                 MyNotificationService.del($stateParams.id);
                 $state.go('my-notification');
             }]

@@ -10,35 +10,33 @@
         var service = {
             subscribe: subscribe,
             all: all,
-            updateWeb: updateWeb,
+            update: update,
+            updateWebViewAll: updateWebViewAll,
             deleteWeb: deleteWeb,
             refuse: refuse,
             loadAll: loadAll,
             reloadAll: reloadAll
         };
-        var userLogin = null;
+        var userId = null;
         var userEmail = null;
         var websites = [];
 
-        function all() {
-            if(websites.length == 0)
-                reloadAll();
+        checkUser();
 
+
+        function all() {
             return websites;
         }
-
 
         function checkUser() {
             Principal.identity().then(function (account) {
                 if(account == null)
                     return;
-                userLogin = account.login;
+                userId = account.id;
                 userEmail = account.email;
                 loadAll();
             });
         }
-
-
 
         function reloadAll() {
             websites = [];
@@ -48,7 +46,7 @@
         function loadAll() {
             websites = [];
             MyWebsite.query({
-                user_id: userLogin
+                user_id: userId
             }, onAllSuccess);
 
             function onAllSuccess(result) {
@@ -71,18 +69,25 @@
         function loadImages(list) {
             for (var i = 0; i < list.length; i++) {
                 var web = list[i];
-                if (web.custom.homepage.mainImage != 'none') {
-                    MyWebsiteStorage.loadImageForWebItem(userLogin, web.id, web, "mainImage.jpg");
+                if (web.custom.homepage != null && web.custom.homepage.mainImage != null) {
+                    MyWebsiteStorage.loadImageForWebItem(userId, web.id, web, "mainImage.jpg");
                 }
             }
 
         }
 
-        function updateWeb(website) {
+        function updateWebViewAll(website) {
             MyWebsite.update(website, success);
             function success() {
                     loadAll();
                 $state.go("my-website");
+            }
+        }
+
+        function update(website) {
+            MyWebsite.update(website, success);
+            function success() {
+                loadAll();
             }
         }
 
@@ -94,7 +99,7 @@
             function success() {
                 loadAll();
                 $state.go("my-website");
-                MyWebsiteStorage.deleteUserWebImageFolder(userLogin, id);
+                MyWebsiteStorage.deleteUserWebImageFolder(userId, id);
             }
         }
 

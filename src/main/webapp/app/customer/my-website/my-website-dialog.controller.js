@@ -19,8 +19,8 @@
         vm.save = save;
 
         Principal.identity().then(function (account) {
-            vm.myWebsite.user_id = account.login;
-            clearUnPaidWebsites(account.login);
+            vm.myWebsite.user_id = account.id;
+            clearUnPaidWebsites(account.id);
         });
 
 

@@ -30,13 +30,6 @@ public class AuditResource {
         this.auditEventService = auditEventService;
     }
 
-    /**
-     * GET  /audits : get a page of AuditEvents.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of AuditEvents in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
     @GetMapping
     public ResponseEntity<List<AuditEvent>> getAll(@ApiParam Pageable pageable) throws URISyntaxException {
         Page<AuditEvent> page = auditEventService.findAll(pageable);
@@ -44,15 +37,6 @@ public class AuditResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
-     * GET  /audits : get a page of AuditEvents between the fromDate and toDate.
-     *
-     * @param fromDate the start of the time period of AuditEvents to get
-     * @param toDate the end of the time period of AuditEvents to get
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of AuditEvents in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
 
     @GetMapping(params = {"fromDate", "toDate"})
     public ResponseEntity<List<AuditEvent>> getByDates(
@@ -65,12 +49,6 @@ public class AuditResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
-     * GET  /audits/:id : get an AuditEvent by id.
-     *
-     * @param id the id of the entity to get
-     * @return the ResponseEntity with status 200 (OK) and the AuditEvent in body, or status 404 (Not Found)
-     */
     @GetMapping("/{id:.+}")
     public ResponseEntity<AuditEvent> get(@PathVariable String id) {
         return ResponseUtil.wrapOrNotFound(auditEventService.find(id));

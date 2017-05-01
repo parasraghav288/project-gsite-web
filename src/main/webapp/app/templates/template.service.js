@@ -26,8 +26,9 @@
 
         function onSuccess(data) {
             templates = data;
-            loadImages(templates);
             notify();
+            loadImages(templates);
+
         }
 
         function loadImages(webTemplates) {

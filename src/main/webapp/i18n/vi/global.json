@@ -46,6 +46,7 @@
             "des": "Mô tả",
             "age": "Tuổi",
             "title": "Tiêu đề",
+            "artist": "Ca sĩ",
             "name": "Tên",
             "fullName": "Tên đầy đủ",
             "signup": "Đăng ký",
@@ -91,6 +92,7 @@
         "des": "mô tả",
         "sortby": "Xắp xếp",
         "searchby": "Tìm kiếm",
+        "category": "thể loại",
         "date": "thời gian",
         "menubar": {
             "faq": "FAQ",

@@ -10,49 +10,49 @@
     function MHomeController($state, $window, entity, MHomeService, MPhotoService, MSongService, MyWebsiteStorage) {
         var vm = this;
 
-
         var website = entity;
-
 
         vm.songs = [];
         vm.photos = [];
-
-        if (website == null)
-            loadDefault();
-        else {
-            if (MHomeService.getImageLink() == null)
-                loadCustom();
-            else {
-                vm.mainImageLink = MHomeService.getImageLink();
-                vm.photos = MPhotoService.getList();
-                vm.songs = MSongService.getList();
-            }
-        }
 
         vm.viewPhoto = viewPhoto;
         vm.playSongAt = playSongAt;
         vm.downloadSongAt = downloadSongAt;
 
+
+        if (website == null)
+            loadDefault();
+        else {
+            loadFromService();
+            loadCustom();
+        }
+
+        function loadFromService() {
+            vm.mainImageLink = MHomeService.getImageLink();
+            vm.photos = MPhotoService.getList();
+            vm.songs = MSongService.getList();
+        }
+
+
         function loadCustom() {
             vm.song = website.custom.song;
             vm.photo = website.custom.photo;
-            var userLogin = website.user_id;
+            var userId = website.user_id;
             var webId = website.id;
 
             vm.homepage = website.custom.homepage;
             vm.homeState = $state.current.name;
-            vm.mainImageLink = null;
 
 
-            loadMainImage(userLogin,webId);
+            loadMainImage(userId, webId);
 
             if (vm.song.isEnable) {
                 vm.songs = vm.song.items;
-                loadSong(userLogin, vm.songs,webId);
+                loadSong(userId, vm.songs, webId);
             }
             if (vm.photo.isEnable) {
                 vm.photos = vm.photo.items;
-                loadPhoto(userLogin, vm.photos,webId);
+                loadPhoto(userId, vm.photos, webId);
             }
 
         }
@@ -113,12 +113,12 @@
             MPhotoService.loadPhotoList(vm.photos);
         }
 
-        function loadMainImage(userLogin,webId) {
+        function loadMainImage(userId, webId) {
 
-            if (vm.homepage.mainImage == 'none')
+            if (vm.homepage.mainImage == null)
                 return;
 
-            MyWebsiteStorage.getUserWebImage(userLogin, webId, "mainImage.jpg").then(onSuccess, onError);
+            MyWebsiteStorage.getUserWebImage(userId, webId, "mainImage.jpg").then(onSuccess, onError);
             function onSuccess(response) {
                 vm.mainImageLink = response.data.link;
                 MHomeService.loadImageLink(vm.mainImageLink);
@@ -129,19 +129,19 @@
             }
         }
 
-        function loadPhoto(userLogin, photos,webId) {
+        function loadPhoto(userId, photos, webId) {
             for (var i = 0; i < photos.length; i++) {
                 var photo = photos[i];
-                MyWebsiteStorage.loadImageForWebItem(userLogin, webId, photo, photo.url);
+                MyWebsiteStorage.loadImageForWebItem(userId, webId, photo, photo.url);
 
             }
             MPhotoService.loadPhotoList(vm.photos);
         }
 
-        function loadSong(userLogin, songs,webId) {
+        function loadSong(userId, songs, webId) {
             for (var i = 0; i < songs.length; i++) {
                 var song = songs[i];
-                MyWebsiteStorage.loadSongForWebItem(userLogin, webId, song, song.url);
+                MyWebsiteStorage.loadSongForWebItem(userId, webId, song, song.url);
             }
             MSongService.loadSongList(vm.songs);
         }

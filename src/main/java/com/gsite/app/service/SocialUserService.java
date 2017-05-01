@@ -3,6 +3,8 @@ package com.gsite.app.service;
 import com.gsite.app.domain.SocialUserConnection;
 import com.gsite.app.repository.SocialUserConnectionRepository;
 import com.gsite.app.security.SecurityUtils;
+import com.gsite.app.service.util.ServiceConstants;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class SocialUserService {
     @Inject
     private SocialUserConnectionRepository userConnectionRepository;
 
+    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public SocialUserConnection getCurrentSocialUser() {
         String id = SecurityUtils.getCurrentUserLogin();
         log.debug("Get social user of current user id: {}", id);
@@ -27,5 +30,9 @@ public class SocialUserService {
             user = optionalUser.get();
         }
         return user;
+    }
+
+    public SocialUserConnection fallBackSingle() {
+        return null;
     }
 }

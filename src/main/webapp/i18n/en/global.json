@@ -46,6 +46,7 @@
             "des": "Description",
             "age": "Age",
             "title": "Title",
+            "artist": "Artist",
             "name": "Name",
             "fullName": "Full name",
             "signup": "Sign up",
@@ -90,6 +91,7 @@
         "name": "name",
         "des": "description",
         "sortby": "Sort by",
+        "category": "category",
         "searchby": "Search by",
         "date": "date",
         "menubar": {

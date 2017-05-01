@@ -4,6 +4,8 @@ import com.gsite.app.domain.Authority;
 import com.gsite.app.domain.User;
 import com.gsite.app.repository.AuthorityRepository;
 import com.gsite.app.repository.UserRepository;
+import com.gsite.app.service.util.ServiceConstants;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -74,7 +76,7 @@ public class SocialService {
         }
     }
 
-
+    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_VOID)
     public void deleteUserSocialConnection(String login) {
         ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
         connectionRepository.findAllConnections().keySet().stream()
@@ -96,6 +98,7 @@ public class SocialService {
         mailService.sendSocialRegistrationValidationEmail(user, providerId);
     }
 
+    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     private User createUserIfNotExist(UserProfile userProfile, String langKey, String providerId) {
         String email = userProfile.getEmail();
         String userName = userProfile.getUsername();
@@ -145,8 +148,21 @@ public class SocialService {
         }
     }
 
+
+    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_VOID)
     private void createSocialConnection(String login, Connection<?> connection) {
         ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
         connectionRepository.addConnection(connection);
+    }
+
+
+    public void fallBackVoid(String login, Connection<?> connection) {
+    }
+
+    public void fallBackVoid(String login) {
+    }
+
+    public User fallBackSingle(UserProfile userProfile, String langKey, String providerId) {
+        return null;
     }
 }

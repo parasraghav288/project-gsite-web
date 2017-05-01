@@ -1,7 +1,16 @@
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    timeout:
+                        enabled: false
+                    thread:
+                        timeoutInMilliseconds: 10000
 
 zuul:
     host:
-        connect-timeout-millis: 5000
+        connect-timeout-millis: 10000
         socket-timeout-millis: 10000
     routes:
         gsitemanager:
@@ -17,10 +26,15 @@ ribbon:
 
 gsitemanager:
     ribbon:
+        ReadTimeout: 10000
+        ConnectTimeout: 10000
         listOfServers: localhost:8082
+
 
 gsitecustomer:
     ribbon:
+        ReadTimeout: 10000
+        ConnectTimeout: 10000
         listOfServers: localhost:8081
 
 management:

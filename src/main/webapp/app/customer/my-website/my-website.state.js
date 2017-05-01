@@ -67,8 +67,8 @@
                                             isEnable: true,
                                             name: "name",
                                             fullName: "Full name",
-                                            avatar: 'none',
-                                            mainImage: 'none'
+                                            avatar: null,
+                                            mainImage: null
                                         },
                                         sidenav: {
                                             isEnable: true,

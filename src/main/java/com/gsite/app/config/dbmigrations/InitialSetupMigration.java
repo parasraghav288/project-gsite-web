@@ -46,7 +46,7 @@ public class InitialSetupMigration {
                 .get());
     }
 
-    @ChangeSet(order = "02", author = "initiator", id = "02-addUsers")
+    @ChangeSet(order = "02", author = "initiator", id = "01-addUsers")
     public void addUsers(DB db) {
         DBCollection usersCollection = db.getCollection("user");
         usersCollection.createIndex("login");
@@ -85,7 +85,7 @@ public class InitialSetupMigration {
             .add("password", "$2a$10$Rny02OnnWr/dhozshakTd.KW3jMHIHDuKOXU0TjIRvI5jx0OoE00G")
             .add("first_name", "admin")
             .add("last_name", "Administrator")
-            .add("email", "admin@localhost")
+            .add("email", "admin@localhost.com")
             .add("activated", "true")
             .add("lang_key", "en")
             .add("created_by", "system")
@@ -99,7 +99,7 @@ public class InitialSetupMigration {
             .add("password", "$2a$10$hNZLbJmcEKnMQy5byOG43.H3vbZ57lfdsWeifoEvvfSr/XBTZhuyi")
             .add("first_name", "")
             .add("last_name", "Manager")
-            .add("email", "manager@localhost")
+            .add("email", "manager@localhost.com")
             .add("activated", "true")
             .add("lang_key", "en")
             .add("created_by", "system")
@@ -113,7 +113,7 @@ public class InitialSetupMigration {
             .add("password", "$2a$10$qInfLlH5J/5MxF.zDgU8ielbBPJ88DtpugJ/1IswNeUXJ6y1xPW7q")
             .add("first_name", "")
             .add("last_name", "User")
-            .add("email", "user@localhost")
+            .add("email", "user@localhost.com")
             .add("activated", "true")
             .add("lang_key", "en")
             .add("created_by", "system")
@@ -123,7 +123,7 @@ public class InitialSetupMigration {
         );
     }
 
-    @ChangeSet(author = "initiator", id = "03-addSocialUserConnection", order = "03")
+    @ChangeSet(author = "initiator", id = "01-addSocialUserConnection", order = "03")
     public void addSocialUserConnection(DB db) {
         DBCollection socialUserConnectionCollection = db.getCollection("social_user_connection");
         socialUserConnectionCollection.createIndex(BasicDBObjectBuilder

@@ -28,7 +28,7 @@
 
 
         Principal.identity().then(function(account) {
-            vm.myWebsite.user_id = account.login;
+            vm.myWebsite.user_id = account.id;
         });
 
         $timeout(function (){
@@ -37,7 +37,7 @@
 
         function save () {
             vm.isSaving = true;
-            MyWebsiteOffline.updateWeb(vm.myWebsite);
+            MyWebsiteOffline.updateWebViewAll(vm.myWebsite);
         }
 
 

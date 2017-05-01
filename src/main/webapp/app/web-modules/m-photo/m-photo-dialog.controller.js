@@ -15,7 +15,7 @@
         vm.submit = submit;
         vm.deleteItem = deleteItem;
 
-        var userLogin = null;
+        var userId = null;
         vm.loading = false;
         vm.photoFile = null;
 
@@ -28,7 +28,7 @@
         vm.upload = upload;
 
         Principal.identity().then(function (user) {
-            userLogin = user.login;
+            userId = user.id;
         });
 
         function reset() {
@@ -60,7 +60,7 @@
         function deleteItem(index) {
             var fileName = vm.photo.items[index].url;
             vm.loading = true;
-            MyWebsiteStorage.deleteUserWebImage(userLogin, webId, fileName).then(onSuccess, onError);
+            MyWebsiteStorage.deleteUserWebImage(userId, webId, fileName).then(onSuccess, onError);
 
             function onSuccess(response) {
                 vm.photo.items.splice(index, 1);
@@ -85,7 +85,7 @@
         function uploadPhoto() {
             if (vm.photoFile != null) {
                 vm.loading = true;
-                MyWebsiteStorage.uploadUserWebImage(userLogin, webId, vm.photoFile, vm.item.url).then(onSuccess, onError);
+                MyWebsiteStorage.uploadUserWebImage(userId, webId, vm.photoFile, vm.item.url).then(onSuccess, onError);
             }
 
             function onSuccess(response) {

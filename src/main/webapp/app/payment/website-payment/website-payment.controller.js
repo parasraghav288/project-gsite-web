@@ -5,9 +5,9 @@
         .module('gsiteApp')
         .controller('WebsitePaymentController', WebsitePaymentController);
 
-    WebsitePaymentController.$inject = ['entity','$state','WebsitePayment','$window','MyWebsite','AlertService'];
+    WebsitePaymentController.$inject = ['entity','$state','WebsitePayment','$window','MyWebsite','AlertService','MyWebsiteOffline'];
 
-    function WebsitePaymentController( entity, $state, WebsitePayment, $window, MyWebsite, AlertService) {
+    function WebsitePaymentController( entity, $state, WebsitePayment, $window, MyWebsite, AlertService,MyWebsiteOffline) {
         var vm = this;
 
         if(entity == null) {
@@ -57,6 +57,7 @@
         function onExecuteSuccess() {
             MyWebsite.paid({id: vm.website.id},null, onSuccess);
             function onSuccess() {
+                MyWebsiteOffline.reloadAll();
                 $state.go('my-website', null, {reload: 'my-website'});
             }
         }

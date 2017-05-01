@@ -11,7 +11,6 @@
         var vm = this;
 
         vm.website = entity;
-        vm.website.sharedUsers = [];
         vm.sendEmail = sendEmail;
         vm.deleteEmail = deleteEmail;
 

@@ -11,6 +11,10 @@
                 <label data-translate="global.form.title">Title</label>
                 <input ng-model="vm.item.title"  type="text" minlength="3" required>
             </md-input-container>
+            <md-input-container ng-show="vm.songFile" >
+                <label data-translate="global.form.artist">Artist</label>
+                <input ng-model="vm.item.artist"  type="text" minlength="3" required>
+            </md-input-container>
             <md-input-container  layout="row">
                 <div>
                     <button type="submit" ng-disabled="!Form.$valid || vm.loading" aria-label="Add" class="md-button md-raised md-primary md-icon-button">
