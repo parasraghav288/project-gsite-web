@@ -130,9 +130,13 @@ repositories {
     maven { url 'https://oss.sonatype.org/content/repositories/releases' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'http://repo.maven.apache.org/maven2' }
+    maven {
+        url "https://github.com/ainguyenkaka/gsite-jpa/raw/master"
+    }
 }
 
 dependencies {
+    compile "com.gsite.app:gsite-jpa:${gsite_jpa_version}"
     compile "io.dropwizard.metrics:metrics-core"
     compile "io.dropwizard.metrics:metrics-jvm:" + dependencyManagement.managedVersions["io.dropwizard.metrics:metrics-core"]
     compile "io.dropwizard.metrics:metrics-servlet:" + dependencyManagement.managedVersions["io.dropwizard.metrics:metrics-core"]
@@ -175,7 +179,6 @@ dependencies {
     compile "com.datastax.cassandra:cassandra-driver-extras:" + dependencyManagement.managedVersions["com.datastax.cassandra:cassandra-driver-core"]
     compile "com.datastax.cassandra:cassandra-driver-mapping"
     compile "org.springframework.cloud:spring-cloud-starter-zuul"
-    compile "org.springframework.cloud:spring-cloud-starter-actuator"
     compile "org.springframework.cloud:spring-cloud-starter"
     compile "org.springframework.cloud:spring-cloud-starter-ribbon"
     compile "org.springframework.cloud:spring-cloud-starter-hystrix"

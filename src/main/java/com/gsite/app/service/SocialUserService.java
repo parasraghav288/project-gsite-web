@@ -20,7 +20,6 @@ public class SocialUserService {
     @Inject
     private SocialUserConnectionRepository userConnectionRepository;
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public SocialUserConnection getCurrentSocialUser() {
         String id = SecurityUtils.getCurrentUserLogin();
         log.debug("Get social user of current user id: {}", id);

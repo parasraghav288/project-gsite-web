@@ -5,9 +5,9 @@
         .module('gsiteApp')
         .controller('SidenavController', SidenavController);
 
-    SidenavController.$inject = ['$state', '$scope', 'ToolbarService', 'LoginService', 'Principal', 'ProfileService', 'LanguageService', '$location', '$anchorScroll', 'AuthServerProvider'];
+    SidenavController.$inject = ['$state', '$scope', 'ToolbarService', 'LoginService', 'Principal', 'ProfileService', 'LanguageService', '$location', '$anchorScroll'];
 
-    function SidenavController($state, $scope, ToolbarService, LoginService, Principal, ProfileService, LanguageService, $location, $anchorScroll, AuthServerProvider) {
+    function SidenavController($state, $scope, ToolbarService, LoginService, Principal, ProfileService, LanguageService, $location, $anchorScroll) {
         var vm = this;
 
         vm.toggleSidenav = ToolbarService.toggleSidenav();
@@ -49,7 +49,7 @@
             });
         }
 
-        AuthServerProvider.subscribe($scope, function somethingChanged() {
+        Principal.subscribe($scope, function somethingChanged() {
             getUserInfo();
         });
 

@@ -1,5 +1,8 @@
 
 spring:
+    profiles:
+        active: prod
+        include: swagger
     devtools:
         restart:
             enabled: false
@@ -7,7 +10,7 @@ spring:
             enabled: false
     data:
         mongodb:
-            uri: mongodb://gsite-mongodb-mongos:27017
+            uri: mongodb://localhost:27017
             database: gsite
 
     thymeleaf:
@@ -34,12 +37,12 @@ application:
     security:
         authentication:
             jwt:
-                secret: 8a1d3b6fa9e302c0415b6d650e9911443f953fd3
+                secret: 8a1d3b6fa9e302c0415b6d650e9911883f953fd3
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail:
         from: gsite@localhost
-        base-url: http://my-server-url-to-change
+        base-url: http://localhost:8080
     metrics:
         jmx.enabled: true
         graphite:

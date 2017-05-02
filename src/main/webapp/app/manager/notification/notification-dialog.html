@@ -3,11 +3,11 @@
         <form name="Form" layout="column">
             <md-input-container>
                 <label data-translate="global.form.title">Title</label>
-                <input type="text" name="title" ng-minlength="2" ng-model="vm.notification.title" required/>
+                <input type="text" name="title" ng-minlength="3" ng-model="vm.notification.title" required/>
             </md-input-container>
             <md-input-container>
                 <label data-translate="notification.content">Content</label>
-                <input type="text" name="content" ng-minlength="2" ng-model="vm.notification.content" required/>
+                <input type="text" name="content" ng-minlength="6" ng-model="vm.notification.content" required/>
             </md-input-container>
         </form>
 

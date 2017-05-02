@@ -29,12 +29,12 @@
                 vm.loading = false;
                 vm.webTemplate.image = fileName;
                 WebTemplate.update(vm.webTemplate);
-                AlertService.success("OK !")
+                AlertService.success("OK !");
             }
 
             function onError(response) {
                 vm.loading = false;
-                console.log(response);
+                AlertService.error(response);
             }
         }
 
@@ -47,7 +47,7 @@
             }
 
             function onError(response) {
-                console.log(response);
+                AlertService.error(response);
             }
         }
 

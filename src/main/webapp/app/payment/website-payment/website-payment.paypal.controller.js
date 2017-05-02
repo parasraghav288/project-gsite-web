@@ -5,9 +5,9 @@
         .module('gsiteApp')
         .controller('WebsitePaymentPayPalController', WebsitePaymentPayPalController);
 
-    WebsitePaymentPayPalController.$inject = ['$state', '$stateParams', 'WebsitePayment', '$location', 'MyWebsite'];
+    WebsitePaymentPayPalController.$inject = ['$state', '$stateParams', 'WebsitePayment', '$location', 'MyWebsite','Principal','MyWebsiteOffline'];
 
-    function WebsitePaymentPayPalController( $state, $stateParams, WebsitePayment, $location, MyWebsite) {
+    function WebsitePaymentPayPalController( $state, $stateParams, WebsitePayment, $location, MyWebsite,Principal,MyWebsiteOffline) {
         var vm = this;
 
         var payment = $location.search();
@@ -23,6 +23,7 @@
             MyWebsite.paid({id: webId},null, onSuccess);
 
             function onSuccess() {
+                loadWebsites();
                 $state.go('my-website', null, {reload: 'my-website'});
             }
         }
@@ -31,5 +32,11 @@
             $state.go('website-payment', {id: webId}, {reload: 'website-payment'});
         }
 
+
+        function loadWebsites() {
+            Principal.identity().then(function (account) {
+                MyWebsiteOffline.checkUser(account.id,account.email);
+            });
+        }
     }
 })();

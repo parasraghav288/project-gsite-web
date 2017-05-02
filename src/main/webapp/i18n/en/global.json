@@ -53,7 +53,7 @@
             "login": "Login",
             "logout": "Logout",
             "error": {
-                "login": "Username or password is incorrect!",
+                "login": "Username or password is invalid!",
                 "username": "More than 6 characters",
                 "password": "More than 8 characters",
                 "confirmpassword": "Match with the password",

@@ -4,7 +4,7 @@
         <form name="Form" layout="column" ng-submit="vm.save()">
             <md-input-container>
                 <label data-translate="global.form.name">Name</label>
-                <input type="text" name="name" ng-minlength="2" ng-model="vm.website.name" required/>
+                <input type="text" name="name" ng-minlength="3" ng-model="vm.website.name" required/>
             </md-input-container>
             <md-input-container>
                 <label data-translate="website.subdomain">Sub domain</label>
@@ -12,7 +12,7 @@
             </md-input-container>
             <md-input-container>
                 <label  data-translate="global.form.des">Description</label>
-                <input type="text" name="des" ng-minlength="2" ng-model="vm.website.des" required/>
+                <input type="text" name="des" ng-minlength="3" ng-model="vm.website.des" required/>
             </md-input-container>
             <div layout="row">
                 <md-input-container>
@@ -25,7 +25,7 @@
                 <md-input-container>
                     <label  data-translate="website.user">User</label>
                     <md-select ng-model="vm.website.user_id" required>
-                        <md-option ng-repeat="item in vm.users" value="{{item.login}}">{{item.login}}</md-option>
+                        <md-option ng-repeat="item in vm.users" value="{{item.id}}">{{item.login}}</md-option>
                     </md-select>
                 </md-input-container>
             </div>

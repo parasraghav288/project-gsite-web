@@ -43,7 +43,6 @@ public class AuditEventService extends AbstractService<PersistentAuditEvent> {
             .map(auditEventConverter::convertToAuditEvent);
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public Optional<AuditEvent> find(String id) {
         return Optional.ofNullable(persistenceAuditEventRepository.findOne(id)).map
             (auditEventConverter::convertToAuditEvent);

@@ -3,7 +3,7 @@
         <form name="Form" layout="column">
             <md-input-container>
                 <label data-translate="question.content">Content</label>
-                <input type="text" name="content" ng-minlength="3" ng-model="vm.question.content" required/>
+                <input type="text" name="content" ng-minlength="6" ng-model="vm.question.content" required/>
             </md-input-container>
             <md-input-container>
                 <label data-translate="question.answer">Answer</label>
@@ -12,7 +12,7 @@
             <md-input-container layout-fill>
                 <label data-translate="question.user">User</label>
                 <md-select ng-model="vm.question.user_id" required>
-                    <md-option ng-repeat="item in vm.users" value="{{item.id}}">{{item.id}}</md-option>
+                    <md-option ng-repeat="item in vm.users" value="{{item.id}}">{{item.login}}</md-option>
                 </md-select>
             </md-input-container>
         </form>

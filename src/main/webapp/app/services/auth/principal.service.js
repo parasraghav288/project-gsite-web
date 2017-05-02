@@ -5,9 +5,9 @@
         .module('gsiteApp')
         .factory('Principal', Principal);
 
-    Principal.$inject = ['$q', 'Account'];
+    Principal.$inject = ['$q', 'Account','$rootScope','MyWebsiteOffline'];
 
-    function Principal($q, Account) {
+    function Principal($q, Account,$rootScope,MyWebsiteOffline) {
         var _identity,
             _authenticated = false;
 
@@ -17,7 +17,8 @@
             hasAuthority: hasAuthority,
             identity: identity,
             isAuthenticated: isAuthenticated,
-            isIdentityResolved: isIdentityResolved
+            isIdentityResolved: isIdentityResolved,
+            subscribe: subscribe
         };
 
         return service;
@@ -66,7 +67,6 @@
             // if we have, reuse it by immediately resolving
             if (angular.isDefined(_identity)) {
                 deferred.resolve(_identity);
-
                 return deferred.promise;
             }
 
@@ -81,7 +81,10 @@
             function getAccountThen(account) {
                 _identity = account.data;
                 _authenticated = true;
+                loadSocialAccount(_identity);
                 deferred.resolve(_identity);
+                notify();
+                loadUserWebsites();
             }
 
             function getAccountCatch() {
@@ -90,11 +93,7 @@
                 deferred.resolve(_identity);
             }
 
-
         }
-
-
-
 
         function isAuthenticated() {
             return _authenticated;
@@ -103,6 +102,33 @@
         function isIdentityResolved() {
             return angular.isDefined(_identity);
         }
+
+
+        function loadUserWebsites() {
+            MyWebsiteOffline.checkUser(_identity.id,_identity.email);
+        }
+
+
+        function subscribe(scope, callback) {
+            var handler = $rootScope.$on('notifying-service-event', callback);
+            scope.$on('$destroy', handler);
+        }
+
+        function notify() {
+            $rootScope.$emit('notifying-service-event');
+        }
+
+        function loadSocialAccount(account) {
+            Account.social().$promise
+                .then(getSocialAccountThen);
+            function getSocialAccountThen(result) {
+                if (result.data != "") {
+                    account["displayName"] = result.data.displayName;
+                    account["imageURL"] = result.data.imageURL;
+                }
+            }
+        }
+
 
 
     }

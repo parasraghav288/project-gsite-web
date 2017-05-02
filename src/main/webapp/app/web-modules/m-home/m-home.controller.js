@@ -5,9 +5,9 @@
         .module('gsiteApp')
         .controller('MHomeController', MHomeController);
 
-    MHomeController.$inject = ['$state', '$window', 'entity', 'MHomeService', 'MPhotoService', 'MSongService', 'MyWebsiteStorage'];
+    MHomeController.$inject = ['$state', '$window', 'entity', 'MHomeService', 'MPhotoService', 'MSongService', 'MyWebsiteStorage','AlertService'];
 
-    function MHomeController($state, $window, entity, MHomeService, MPhotoService, MSongService, MyWebsiteStorage) {
+    function MHomeController($state, $window, entity, MHomeService, MPhotoService, MSongService, MyWebsiteStorage,AlertService) {
         var vm = this;
 
         var website = entity;
@@ -125,7 +125,7 @@
             }
 
             function onError(response) {
-                console.log(response);
+                AlertService.error(response);
             }
         }
 

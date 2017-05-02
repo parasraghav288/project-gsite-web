@@ -1,8 +1,6 @@
 <!--Anonymous-->
 <div ng-show="{{!vm.isAuthenticated()}}" class="m-login-panel">
-    <div layout-padding>
-        <span ng-show="vm.authenticationError" class="error-text" data-translate="global.form.error.login">Username or password is incorrect!</span>
-    </div>
+    <p ng-show="vm.authenticationError" class="error-text" data-translate="global.form.error.login">Username or password is incorrect!</p>
     <md-card-content>
         <form name="Form" layout="column" ng-submit="vm.login($event)">
             <md-input-container>

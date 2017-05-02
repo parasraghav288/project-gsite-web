@@ -15,7 +15,7 @@
         reset. Please sign
         in</p>
     <div ng-show="vm.success" layout="row" layout-align="center center">
-        <md-button class="md-raised md-primary" aria-label="login"> Login</md-button>
+        <md-button ng-click="vm.showLoginDialog()" class="md-raised md-primary" aria-label="login"> Login</md-button>
     </div>
 
     <form name="Form" ng-hide="vm.keyMissing" ng-show="!vm.success" ng-submit="vm.finishReset($event)">

@@ -76,7 +76,6 @@ public class SocialService {
         }
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_VOID)
     public void deleteUserSocialConnection(String login) {
         ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
         connectionRepository.findAllConnections().keySet().stream()
@@ -98,7 +97,6 @@ public class SocialService {
         mailService.sendSocialRegistrationValidationEmail(user, providerId);
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     private User createUserIfNotExist(UserProfile userProfile, String langKey, String providerId) {
         String email = userProfile.getEmail();
         String userName = userProfile.getUsername();
@@ -148,8 +146,6 @@ public class SocialService {
         }
     }
 
-
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_VOID)
     private void createSocialConnection(String login, Connection<?> connection) {
         ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
         connectionRepository.addConnection(connection);

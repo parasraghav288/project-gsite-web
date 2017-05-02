@@ -4,47 +4,43 @@
         .module('gsiteApp')
         .factory('MyWebsiteOffline', MyWebsiteOffline);
 
-    MyWebsiteOffline.$inject = ['$rootScope', '$state', 'MyWebsite', 'Principal', 'MyWebsiteStorage'];
+    MyWebsiteOffline.$inject = ['$rootScope', '$state', 'MyWebsite', 'MyWebsiteStorage'];
 
-    function MyWebsiteOffline($rootScope, $state, MyWebsite, Principal, MyWebsiteStorage) {
+    function MyWebsiteOffline($rootScope, $state, MyWebsite, MyWebsiteStorage) {
         var service = {
             subscribe: subscribe,
             all: all,
+            allSharedWebsites: allSharedWebsites,
             update: update,
             updateWebViewAll: updateWebViewAll,
             deleteWeb: deleteWeb,
             refuse: refuse,
             loadAll: loadAll,
-            reloadAll: reloadAll
+            checkUser: checkUser
         };
         var userId = null;
         var userEmail = null;
         var websites = [];
-
-        checkUser();
+        var sharedWebsites = [];
 
 
         function all() {
             return websites;
         }
 
-        function checkUser() {
-            Principal.identity().then(function (account) {
-                if(account == null)
-                    return;
-                userId = account.id;
-                userEmail = account.email;
-                loadAll();
-            });
+        function allSharedWebsites() {
+            return sharedWebsites;
         }
 
-        function reloadAll() {
-            websites = [];
-            checkUser();
+
+        function checkUser(accountId, email) {
+            userId = accountId;
+            userEmail = email;
+            loadAll();
         }
+
 
         function loadAll() {
-            websites = [];
             MyWebsite.query({
                 user_id: userId
             }, onAllSuccess);
@@ -61,7 +57,7 @@
 
             function onShareSuccess(result) {
                 loadImages(result);
-                websites = websites.concat(result);
+                sharedWebsites = result;
                 notify();
             }
         }
@@ -69,8 +65,8 @@
         function loadImages(list) {
             for (var i = 0; i < list.length; i++) {
                 var web = list[i];
-                if (web.custom.homepage != null && web.custom.homepage.mainImage != null) {
-                    MyWebsiteStorage.loadImageForWebItem(userId, web.id, web, "mainImage.jpg");
+                if (web.custom.homepage != null && web.custom.homepage.mainImage == null) {
+                    MyWebsiteStorage.loadImageForWebItem(web.user_id, web.id, web, "mainImage.jpg");
                 }
             }
 
@@ -79,7 +75,7 @@
         function updateWebViewAll(website) {
             MyWebsite.update(website, success);
             function success() {
-                    loadAll();
+                loadAll();
                 $state.go("my-website");
             }
         }
@@ -92,7 +88,7 @@
         }
 
         function deleteWeb(id) {
-           MyWebsite.delete({
+            MyWebsite.delete({
                 id: id
             }, success);
 
@@ -104,17 +100,17 @@
         }
 
         function refuse(id) {
-           MyWebsite.get({
+            MyWebsite.get({
                 id: id
             }, function (web) {
                 var index = web.sharedUsers.indexOf(userEmail);
                 web.sharedUsers.splice(index, 1);
-               MyWebsite.update(web, onRefuseSuccess);
+                MyWebsite.update(web, onRefuseSuccess);
             });
         }
 
         function onRefuseSuccess(result) {
-            notify();
+            reloadAll();
         }
 
 

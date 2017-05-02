@@ -5,12 +5,12 @@
         .module('gsiteApp')
         .controller('WebsitePaymentController', WebsitePaymentController);
 
-    WebsitePaymentController.$inject = ['entity','$state','WebsitePayment','$window','MyWebsite','AlertService','MyWebsiteOffline'];
+    WebsitePaymentController.$inject = ['entity', '$state', 'WebsitePayment', '$window', 'MyWebsite', 'AlertService','Principal', 'MyWebsiteOffline'];
 
-    function WebsitePaymentController( entity, $state, WebsitePayment, $window, MyWebsite, AlertService,MyWebsiteOffline) {
+    function WebsitePaymentController(entity, $state, WebsitePayment, $window, MyWebsite, AlertService, Principal,MyWebsiteOffline) {
         var vm = this;
 
-        if(entity == null) {
+        if (entity == null) {
             $state.go("template");
             return;
         }
@@ -32,10 +32,10 @@
             vm.isPaying = true;
             WebsitePayment.create({
                 webId: vm.website.id
-            },null, onSuccess);
+            }, null, onSuccess,onExecuteError);
 
             function onSuccess(data) {
-                $window.location.href  = data.approval_link;
+                $window.location.href = data.approval_link;
             }
         }
 
@@ -50,14 +50,14 @@
                 month: vm.card.month,
                 year: vm.card.year,
                 cvv: vm.card.cvv
-            },null,onExecuteSuccess, onExecuteError);
+            }, null, onExecuteSuccess, onExecuteError);
 
         }
 
         function onExecuteSuccess() {
-            MyWebsite.paid({id: vm.website.id},null, onSuccess);
+            MyWebsite.paid({id: vm.website.id}, null, onSuccess);
             function onSuccess() {
-                MyWebsiteOffline.reloadAll();
+                loadWebsites();
                 $state.go('my-website', null, {reload: 'my-website'});
             }
         }
@@ -67,6 +67,12 @@
             AlertService.error("PayPal with timeout. Press buy button again!");
         }
 
+
+        function loadWebsites() {
+            Principal.identity().then(function (account) {
+                MyWebsiteOffline.checkUser(account.id,account.email);
+            });
+        }
 
     }
 })();

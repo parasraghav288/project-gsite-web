@@ -5,9 +5,9 @@
         .module('gsiteApp')
         .controller('CustomSidenavController', CustomSidenavController);
 
-    CustomSidenavController.$inject = ['$state', '$scope', 'Principal', 'LoginService', '$location', '$anchorScroll', 'AuthServerProvider'];
+    CustomSidenavController.$inject = ['$state', '$scope', 'Principal', 'LoginService', '$location', '$anchorScroll'];
 
-    function CustomSidenavController($state, $scope, Principal, LoginService, $location, $anchorScroll, AuthServerProvider) {
+    function CustomSidenavController($state, $scope, Principal, LoginService, $location, $anchorScroll) {
         var vm = this;
 
         vm.isAuthenticated = Principal.isAuthenticated;
@@ -39,7 +39,7 @@
             });
         }
 
-        AuthServerProvider.subscribe($scope, function somethingChanged() {
+        Principal.subscribe($scope, function somethingChanged() {
             getUserInfo();
         });
 

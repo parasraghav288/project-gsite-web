@@ -39,13 +39,15 @@ public class UserService extends AbstractService<User> {
     @Inject
     private SocialService socialService;
 
+    @Inject
+    private WebsiteService websiteService;
+
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
@@ -58,7 +60,6 @@ public class UserService extends AbstractService<User> {
             });
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public Optional<User> completePasswordReset(String newPassword, String key) {
         log.debug("Reset user password for reset key {}", key);
 
@@ -76,7 +77,6 @@ public class UserService extends AbstractService<User> {
             });
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmail(mail)
             .filter(User::getActivated)
@@ -88,7 +88,6 @@ public class UserService extends AbstractService<User> {
             });
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public User createUser(String login, String password, String firstName, String lastName, String email,
                            String imageUrl, String langKey) {
 
@@ -115,7 +114,6 @@ public class UserService extends AbstractService<User> {
         return newUser;
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public User createUser(UserDTO userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin());
@@ -145,7 +143,6 @@ public class UserService extends AbstractService<User> {
         return user;
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_VOID)
     public void updateUser(String firstName, String lastName, String email, String langKey) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
             user.setFirstName(firstName);
@@ -157,7 +154,6 @@ public class UserService extends AbstractService<User> {
         });
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
             .findOne(userDTO.getId()))
@@ -181,19 +177,23 @@ public class UserService extends AbstractService<User> {
             .map(UserDTO::new);
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_VOID)
     public boolean deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
-            socialService.deleteUserSocialConnection(user.getLogin());
-            userRepository.delete(user);
+            if(isDeleted(user.getId())) {
+                socialService.deleteUserSocialConnection(user.getLogin());
+                userRepository.delete(user);
+            }
             log.debug("Deleted User: {}", user);
         });
 
         return true;
     }
 
+    private boolean isDeleted(String id) {
+        return websiteService.findAllByUserID(id).isEmpty();
+    }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_VOID)
+
     public void changePassword(String password) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
             String encryptedPassword = passwordEncoder.encode(password);
@@ -208,7 +208,6 @@ public class UserService extends AbstractService<User> {
         return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_LIST)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneByLogin(login);
     }
@@ -233,7 +232,6 @@ public class UserService extends AbstractService<User> {
     }
 
     @Scheduled(cron = "0 0 1 * * ?")
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_VOID)
     public void removeNotActivatedUsers() {
         ZonedDateTime now = ZonedDateTime.now();
         List<User> users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(now.minusDays(3));
@@ -243,7 +241,6 @@ public class UserService extends AbstractService<User> {
         }
     }
 
-    @HystrixCommand(fallbackMethod = ServiceConstants.FALL_BACK_SINGLE)
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findOneByEmail(email);
     }
@@ -253,26 +250,6 @@ public class UserService extends AbstractService<User> {
         return new PageImpl<>(new ArrayList<>());
     }
 
-    public User fallBackSingle(String login, String password, String firstName, String lastName, String email,
-                               String imageUrl, String langKey) {
-        return null;
-    }
-
-    public User fallBackSingle(UserDTO userDTO) {
-        return null;
-    }
-
-    public Optional<User> fallBackSingle(String param) {
-        return Optional.empty();
-    }
-
-    public Optional<User> fallBackSingle(String param, String param2) {
-        return Optional.empty();
-    }
-
-    public Optional<UserDTO> fallBackSingleDTO(String param) {
-        return Optional.empty();
-    }
 
     public List<User> fallBackList(String param) {
         return new ArrayList<>();
@@ -282,6 +259,4 @@ public class UserService extends AbstractService<User> {
         return new ArrayList<>();
     }
 
-    public void fallBackVoid(String firstName, String lastName, String email, String langKey) {
-    }
 }

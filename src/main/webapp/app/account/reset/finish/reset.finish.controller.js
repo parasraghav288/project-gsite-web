@@ -14,7 +14,7 @@
         vm.confirmPassword = null;
         vm.error = null;
         vm.finishReset = finishReset;
-        vm.login = LoginService.open;
+        vm.showLoginDialog = LoginService.open;
         vm.resetAccount = {};
         vm.success = null;
 
