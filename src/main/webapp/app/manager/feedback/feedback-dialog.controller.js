@@ -47,7 +47,7 @@
         function findAllUsers() {
             User.query({
                 page: 0,
-                size: 5
+                size: 10
             }, onSuccess);
 
             function onSuccess(data) {

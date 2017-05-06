@@ -48,12 +48,14 @@
         </md-button>
         <span flex></span>
         <form ng-submit="vm.search()">
-            <md-input-container md-theme="input" class="m-toolbar-search-box" md-no-float flex-xs="90">
-                <input id="searchInput" name="searchInput" placeholder="{{'global.search.placeholder' | translate}}" ng-model="vm.searchText">
-            </md-input-container>
-            <button class="md-button md-icon-button" aria-label="Search" type="submit">
-                <i class="material-icons">search</i>
-            </button>
+            <div layout="row" layout-padding layout-align="center center">
+                <md-input-container md-theme="input" class="m-toolbar-search-box" md-no-float flex-xs="90">
+                    <input id="searchInput" name="searchInput" placeholder="{{'global.search.placeholder' | translate}}" ng-model="vm.searchText">
+                </md-input-container>
+                <button class="md-button md-icon-button" aria-label="Search" type="submit">
+                    <i class="material-icons">search</i>
+                </button>
+            </div>
         </form>
         <md-button hide-xs hide-sm ui-sref="my-website" class="md-icon-button" aria-label="My Websites"  ng-show="vm.isAuthenticated()">
             <md-icon class="material-icons">web</md-icon>

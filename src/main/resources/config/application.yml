@@ -83,11 +83,6 @@ security:
     basic:
         enabled: false
 
-server:
-    session:
-        cookie:
-            http-only: true
-
 storage:
     url:
         image: /

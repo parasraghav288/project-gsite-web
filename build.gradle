@@ -21,8 +21,8 @@ buildscript {
 }
 
 apply plugin: 'java'
-sourceCompatibility=1.8
-targetCompatibility=1.8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
@@ -31,14 +31,14 @@ apply plugin: 'com.moowork.node'
 apply plugin: 'com.moowork.gulp'
 apply plugin: 'io.spring.dependency-management'
 dependencyManagement {
-  imports {
-    mavenBom 'org.springframework.cloud:spring-cloud-dependencies:' + spring_cloud_version
-  }
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:' + spring_cloud_version
+    }
 }
 defaultTasks 'bootRun'
 
 bootRepackage {
-   mainClass = 'com.gsite.app.GsiteWebApp'
+    mainClass = 'com.gsite.app.GsiteWebApp'
 }
 
 war {
@@ -141,8 +141,8 @@ dependencies {
     compile "io.dropwizard.metrics:metrics-jvm:" + dependencyManagement.managedVersions["io.dropwizard.metrics:metrics-core"]
     compile "io.dropwizard.metrics:metrics-servlet:" + dependencyManagement.managedVersions["io.dropwizard.metrics:metrics-core"]
     compile "io.dropwizard.metrics:metrics-json:" + dependencyManagement.managedVersions["io.dropwizard.metrics:metrics-core"]
-    compile ("io.dropwizard.metrics:metrics-servlets")
-    compile ("net.logstash.logback:logstash-logback-encoder:${logstash_logback_encoder_version}") {
+    compile("io.dropwizard.metrics:metrics-servlets")
+    compile("net.logstash.logback:logstash-logback-encoder:${logstash_logback_encoder_version}") {
         exclude(module: 'ch.qos.logback')
     }
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org"
@@ -150,7 +150,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     compile "com.fasterxml.jackson.core:jackson-annotations"
     compile "com.fasterxml.jackson.core:jackson-databind"
-    compile ("com.ryantenney.metrics:metrics-spring:${metrics_spring_version}") {
+    compile("com.ryantenney.metrics:metrics-spring:${metrics_spring_version}") {
         exclude(module: 'metrics-core')
         exclude(module: 'metrics-healthchecks')
     }
@@ -173,7 +173,7 @@ dependencies {
     }
     compile "org.springframework.boot:spring-boot-starter-undertow"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
-    compile ("com.datastax.cassandra:cassandra-driver-core") {
+    compile("com.datastax.cassandra:cassandra-driver-core") {
         exclude module: 'com.codahale.metrics'
     }
     compile "com.datastax.cassandra:cassandra-driver-extras:" + dependencyManagement.managedVersions["com.datastax.cassandra:cassandra-driver-core"]
@@ -185,7 +185,7 @@ dependencies {
     compile "org.springframework.cloud:spring-cloud-starter-spectator"
     compile "org.springframework.cloud:spring-cloud-starter-feign"
     compile "org.springframework.boot:spring-boot-starter-cloud-connectors"
-    compile ("org.springframework:spring-context-support") {
+    compile("org.springframework:spring-context-support") {
         exclude(module: 'quartz')
     }
     compile "org.springframework.security:spring-security-config"
@@ -193,7 +193,7 @@ dependencies {
     compile "org.springframework.security:spring-security-web"
     compile "io.jsonwebtoken:jjwt:${jjwt_version}"
     compile "com.github.mongobee:mongobee:${mongobee_version}"
-    compile ("io.springfox:springfox-swagger2:${springfox_version}") {
+    compile("io.springfox:springfox-swagger2:${springfox_version}") {
         exclude module: 'mapstruct'
     }
     compile "io.springfox:springfox-bean-validators:${springfox_version}"
@@ -242,5 +242,5 @@ if (project.hasProperty('nodeInstall')) {
 }
 
 compileJava.dependsOn processResources
-processResources.dependsOn cleanResources,bootBuildInfo
+processResources.dependsOn cleanResources, bootBuildInfo
 bootBuildInfo.mustRunAfter cleanResources

@@ -65,7 +65,7 @@
         function loadImages(list) {
             for (var i = 0; i < list.length; i++) {
                 var web = list[i];
-                if (web.custom.homepage != null && web.custom.homepage.mainImage == null) {
+                if (web.custom.homepage != null && web.custom.homepage.mainImage != null) {
                     MyWebsiteStorage.loadImageForWebItem(web.user_id, web.id, web, "mainImage.jpg");
                 }
             }
@@ -110,7 +110,7 @@
         }
 
         function onRefuseSuccess(result) {
-            reloadAll();
+            loadAll();
         }
 
 
