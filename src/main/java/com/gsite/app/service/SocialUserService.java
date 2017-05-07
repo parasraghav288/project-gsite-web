@@ -7,6 +7,7 @@ import com.gsite.app.service.util.ServiceConstants;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ public class SocialUserService {
 
     private final Logger log = LoggerFactory.getLogger(SocialUserService.class);
 
-    @Inject
+    @Autowired
     private SocialUserConnectionRepository userConnectionRepository;
 
     public SocialUserConnection getCurrentSocialUser() {

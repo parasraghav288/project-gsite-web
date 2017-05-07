@@ -6,6 +6,7 @@ import com.gsite.app.security.jwt.TokenProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,13 +25,13 @@ public class CustomSignInAdapter implements SignInAdapter {
     @SuppressWarnings("unused")
     private final Logger log = LoggerFactory.getLogger(CustomSignInAdapter.class);
 
-    @Inject
+    @Autowired
     private UserDetailsService userDetailsService;
 
-    @Inject
+    @Autowired
     private ApplicationProperties applicationProperties;
 
-    @Inject
+    @Autowired
     private TokenProvider tokenProvider;
 
     @Override

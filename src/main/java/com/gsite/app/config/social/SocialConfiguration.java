@@ -6,6 +6,7 @@ import com.gsite.app.security.social.CustomSignInAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -32,10 +33,10 @@ import javax.inject.Inject;
 public class SocialConfiguration implements SocialConfigurer {
     private final Logger log = LoggerFactory.getLogger(SocialConfiguration.class);
 
-    @Inject
+    @Autowired
     private SocialUserConnectionRepository socialUserConnectionRepository;
 
-    @Inject
+    @Autowired
     Environment environment;
 
     @Bean

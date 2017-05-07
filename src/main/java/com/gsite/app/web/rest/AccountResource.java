@@ -15,6 +15,7 @@ import com.gsite.app.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,7 +39,7 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    @Inject
+    @Autowired
     private SocialUserService socialUserService;
 
     public AccountResource(UserRepository userRepository, UserService userService,

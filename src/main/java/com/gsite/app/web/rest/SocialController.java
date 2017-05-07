@@ -3,6 +3,7 @@ package com.gsite.app.web.rest;
 import com.gsite.app.service.SocialService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.support.URIBuilder;
@@ -20,10 +21,10 @@ import javax.inject.Inject;
 public class SocialController {
     private final Logger log = LoggerFactory.getLogger(SocialController.class);
 
-    @Inject
+    @Autowired
     private SocialService socialService;
 
-    @Inject
+    @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
     @GetMapping("/signup")

@@ -13,6 +13,7 @@ import com.gsite.app.service.util.ServiceConstants;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -36,10 +37,10 @@ public class UserService extends AbstractService<User> {
     private final AuthorityRepository authorityRepository;
 
 
-    @Inject
+    @Autowired
     private SocialService socialService;
 
-    @Inject
+    @Autowired
     private WebsiteService websiteService;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
