@@ -33,10 +33,10 @@ import javax.inject.Inject;
 public class SocialConfiguration implements SocialConfigurer {
     private final Logger log = LoggerFactory.getLogger(SocialConfiguration.class);
 
-    @Autowired
+    @Inject
     private SocialUserConnectionRepository socialUserConnectionRepository;
 
-    @Autowired
+    @Inject
     Environment environment;
 
     @Bean

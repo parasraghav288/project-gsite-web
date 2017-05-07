@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,22 +56,22 @@ public class UserResourceIntTest {
     private static final String DEFAULT_LANGKEY = "en";
     private static final String UPDATED_LANGKEY = "fr";
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
-    @Autowired
+    @Inject
     private MailService mailService;
 
-    @Autowired
+    @Inject
     private UserService userService;
 
-    @Autowired
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Autowired
+    @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Autowired
+    @Inject
     private ExceptionTranslator exceptionTranslator;
 
     private MockMvc restUserMockMvc;

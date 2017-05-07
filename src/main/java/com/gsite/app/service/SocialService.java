@@ -31,19 +31,19 @@ import java.util.Set;
 public class SocialService {
     private final Logger log = LoggerFactory.getLogger(SocialService.class);
 
-    @Autowired
+    @Inject
     private UsersConnectionRepository usersConnectionRepository;
 
-    @Autowired
+    @Inject
     private AuthorityRepository authorityRepository;
 
-    @Autowired
+    @Inject
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
-    @Autowired
+    @Inject
     private MailService mailService;
 
     @PostConstruct

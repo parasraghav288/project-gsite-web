@@ -37,10 +37,10 @@ public class UserService extends AbstractService<User> {
     private final AuthorityRepository authorityRepository;
 
 
-    @Autowired
+    @Inject
     private SocialService socialService;
 
-    @Autowired
+    @Inject
     private WebsiteService websiteService;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {

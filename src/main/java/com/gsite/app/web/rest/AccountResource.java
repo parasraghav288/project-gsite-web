@@ -39,7 +39,7 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    @Autowired
+    @Inject
     private SocialUserService socialUserService;
 
     public AccountResource(UserRepository userRepository, UserService userService,

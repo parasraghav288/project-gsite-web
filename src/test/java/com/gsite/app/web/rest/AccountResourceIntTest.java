@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -39,13 +40,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = GsiteWebApp.class)
 public class AccountResourceIntTest {
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
-    @Autowired
+    @Inject
     private AuthorityRepository authorityRepository;
 
-    @Autowired
+    @Inject
     private UserService userService;
 
     @Mock

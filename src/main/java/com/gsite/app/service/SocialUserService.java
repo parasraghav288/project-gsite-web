@@ -18,7 +18,7 @@ public class SocialUserService {
 
     private final Logger log = LoggerFactory.getLogger(SocialUserService.class);
 
-    @Autowired
+    @Inject
     private SocialUserConnectionRepository userConnectionRepository;
 
     public SocialUserConnection getCurrentSocialUser() {

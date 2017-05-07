@@ -21,10 +21,10 @@ import javax.inject.Inject;
 public class SocialController {
     private final Logger log = LoggerFactory.getLogger(SocialController.class);
 
-    @Autowired
+    @Inject
     private SocialService socialService;
 
-    @Autowired
+    @Inject
     private ProviderSignInUtils providerSignInUtils;
 
     @GetMapping("/signup")

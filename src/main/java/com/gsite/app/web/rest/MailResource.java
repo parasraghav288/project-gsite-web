@@ -19,7 +19,7 @@ public class MailResource {
 
     private final Logger log = LoggerFactory.getLogger(MailResource.class);
 
-    @Autowired
+    @Inject
     private MailService websiteService;
 
     @GetMapping("/mail/share")

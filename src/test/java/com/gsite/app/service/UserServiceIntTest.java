@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import javax.inject.Inject;
 import java.util.Optional;
 import java.util.List;
 
@@ -24,10 +26,10 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest(classes = GsiteWebApp.class)
 public class UserServiceIntTest {
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
-    @Autowired
+    @Inject
     private UserService userService;
 
     @Test

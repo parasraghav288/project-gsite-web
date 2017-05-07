@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -35,19 +36,19 @@ public class AuditResourceIntTest {
     private static final LocalDateTime SAMPLE_TIMESTAMP = LocalDateTime.parse("2015-08-04T10:11:30");
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    @Autowired
+    @Inject
     private PersistenceAuditEventRepository auditEventRepository;
 
-    @Autowired
+    @Inject
     private AuditEventConverter auditEventConverter;
 
-    @Autowired
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Autowired
+    @Inject
     private FormattingConversionService formattingConversionService;
 
-    @Autowired
+    @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private PersistentAuditEvent auditEvent;

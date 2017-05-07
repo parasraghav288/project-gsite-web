@@ -25,13 +25,13 @@ public class CustomSignInAdapter implements SignInAdapter {
     @SuppressWarnings("unused")
     private final Logger log = LoggerFactory.getLogger(CustomSignInAdapter.class);
 
-    @Autowired
+    @Inject
     private UserDetailsService userDetailsService;
 
-    @Autowired
+    @Inject
     private ApplicationProperties applicationProperties;
 
-    @Autowired
+    @Inject
     private TokenProvider tokenProvider;
 
     @Override

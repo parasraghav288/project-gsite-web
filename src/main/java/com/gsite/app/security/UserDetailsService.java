@@ -22,7 +22,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
     @Override
