@@ -15,7 +15,7 @@ node {
     }
 
     stage('install tools') {
-        sh "./gradlew -PnodeInstall --no-daemon"
+        sh "./gradlew yarn_install -PnodeInstall --no-daemon"
     }
 
     stage('backend tests') {
@@ -30,7 +30,7 @@ node {
 
     stage('frontend tests') {
         try {
-            sh "./gradlew -PnodeInstall --no-daemon"
+            sh "./gradlew gulp_test -PnodeInstall --no-daemon"
         } catch(err) {
             throw err
         } finally {
@@ -48,7 +48,7 @@ node {
     stage('build docker') {
         sh "cp -R src/main/docker build/"
         sh "cp build/libs/*.war build/docker/"
-        dockerImage = docker.build('demo', 'build/docker')
+        dockerImage = docker.build('ainguyen/gsite-micro-web', 'build/docker')
     }
 
     stage('publish docker') {
