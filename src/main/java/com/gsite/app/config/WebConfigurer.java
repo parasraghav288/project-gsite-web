@@ -68,7 +68,6 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
 
         if (applicationProperties.getHttp().getVersion().equals(ApplicationProperties.Http.Version.V_2_0) &&
             container instanceof UndertowEmbeddedServletContainerFactory) {
-
             ((UndertowEmbeddedServletContainerFactory) container)
                 .addBuilderCustomizers(builder ->
                     builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));

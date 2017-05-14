@@ -10,7 +10,7 @@ spring:
             enabled: false
     data:
         mongodb:
-            uri: mongodb://mongos:27017
+            uri: mongodb://localhost:27017
             database: gsite
 
     thymeleaf:

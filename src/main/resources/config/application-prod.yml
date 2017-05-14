@@ -36,7 +36,7 @@ application:
             gsitemanager: /api
             gsitecustomer: /api
     http:
-        version: V_1_1
+        version: V_2_0
         cache:
             timeToLiveInDays: 1461
     security:
@@ -46,13 +46,13 @@ application:
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail:
-        from: gsite@localhost
-        base-url: http://localhost:8080
+        from: giftsiteforyou@gmail.com
+        base-url: http://gsite.cf
     metrics:
         jmx.enabled: true
         graphite:
             enabled: false
-            host: localhost
+            host: gsite.cf
             port: 2003
             prefix: gsite
         prometheus:
@@ -64,7 +64,7 @@ application:
     logging:
         logstash:
             enabled: false
-            host: localhost
+            host: gsite.cf
             port: 5000
             queue-size: 512
         spectator-metrics:
