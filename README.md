@@ -1,5 +1,5 @@
 # GSite Web
-Please visit GSite on cloud: https://gsite.cf
+ for more information please visit GSite on cloud: https://gsite.cf
 
 ### Default local users:
 - {username} - {password}
